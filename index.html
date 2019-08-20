@@ -3,30 +3,97 @@
   <head>
     <meta charset="utf-8">
     <title>Number Guesser Doubles</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
   </head>
   <body>
     <header>
-      <h1></h1>
-      <h2></h2>
+      <h1 class="title-1">Number</h1>
+      <h2 class="title-2">Ultimate Challenger Edition</h2>
     </header>
-    <main>
-      <section>
-        <article class="">
-
+    <main class="content">
+      <section class="section-left">
+        <article class="set-range">
+          <h3 class="block-title">Set Range</h3>
+          <form class="set-range__form" action="index.html" method="post">
+            <div class="input-wrapper">
+              <label class="label" for="min-range">Min Range</label>
+              <input id="min-range" class="range" type="text" name="" value="">
+            </div>
+            <div class="input-wrapper">
+              <label class="label" for="max-range">Max Range</label>
+              <input id="max-range" class="range" type="text" name="" value="">
+            </div>
+          </form>
+          <button class="button--dark-grey">Update</button>
         </article>
-        <article class="">
-
+        <article class="challenger-name">
+          <p>The Current Range is <span class="range-number">1</span> to <span class="range-number">100</span></p>
+          <h3 class="block-title">Challenger 1</h3>
+          <form class="challenger-name__form" action="index.html" method="post">
+            <div class="input-wrapper">
+              <label class="label" for="name-challenger-1">Name</label>
+              <input id="name-challenger-1" class="input-name" type="text" name="" value="">
+            </div>
+            <div class="input-wrapper">
+              <label class="label" for="guess-challenger-1">Guess</label>
+              <input id="max-range" class="range" type="text" name="" value="">
+            </div>
+          </form>
+          <h3 class="block-title">Challenger 2</h3>
+          <form class="challenger-name__form" action="index.html" method="post">
+            <div class="input-wrapper">
+              <label class="label" for="name-challenger-2">Name</label>
+              <input id="name-challenger-2" class="input-name" type="text" name="" value="">
+            </div>
+            <div class="input-wrapper">
+              <label class="label" for="guess-challenger-2">Guess</label>
+              <input id="max-range" class="range" type="text" name="" value="">
+            </div>
+          </form>
+          <div class="button-wrapper">
+            <button class="button--dark-grey">SUBMIT GUESS</button>
+            <button class="button--light-grey">RESET GAME</button>
+            <button class="button--light-grey">CLEAR GAME</button>
+          </div>
         </article>
-        <article class="">
-
+        <article class="latest-score">
+          <h3 class="block-title">Latest Score</h3>
+          <div class="challenger-card">
+            <h4 class="challenger-name-title">Challenger 1 Name</h4>
+            <p>current guess</p>
+            <span class="guess-number">97</span>
+            <p>that's too high</p>
+          </div>
+          <div class="challenger-card">
+            <h4 class="challenger-name-title">Challenger 2 Name</h4>
+            <p>current guess</p>
+            <span class="guess-number">3</span>
+            <p>that's too low</p>
+          </div>
         </article>
       </section>
-      <section>
-        <article class="">
-
+      <section class="section-right">
+        <article class="winner-card">
+          <div class="header-card">
+            <span class="header-name">Challenger 1 name</span>
+            <p> vs </p>
+            <span class="header-name">Challenger 2 name</span>
+          </div>
+          <div class="winner-wrapper">
+            <p class="winner-name">Challenger 2 name</p>
+            <p class="winner">winner</p>
+          </div>
+          <div class="footer-card">
+            <span class="footer-number">47</span>
+            <p class="footer-text">guesses</p>
+            <span class="footer-number">1.35</span>
+            <p class="footer-text">minutes</p>
+            <img src="images/delete.png" alt="">
+          </div>
         </article>
       </section>
     </main>
+    <script type="text/javascript" src="js/main.js"></script>
   </body>
 </html>
