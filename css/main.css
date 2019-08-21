@@ -78,3 +78,101 @@ body {
 }
 
 /* RIGHT SECTION */
+
+.section-right {
+  width: 50%;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.winner-card {
+  background-color: #FFFFFF;
+  width: 85%;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #6e6e6e;
+}
+
+.header-card {
+  width: 90%;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0px;
+}
+
+.header-name {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.vs {
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 300;
+}
+
+.winner-wrapper {
+  border-top: 1px solid #D0d2d3;
+  border-bottom: 1px solid #D0d2d3;
+  padding: 20px 0px;
+  width: 95%;
+  text-align: center;
+}
+
+.winner-name {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.winner-name::after {
+  content: "winner";
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 32px;
+  display: block;
+  line-height: 1.0;
+}
+
+.footer-card {
+  width: 100%;
+  padding: 10px 0px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.guesses-number {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.guesses-number::after {
+  content: "guesses";
+  text-transform: uppercase;
+  font-weight: 300;
+  margin-left: 2px;
+}
+
+.minutes-number {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.minutes-number::after {
+  content: "minutes";
+  text-transform: uppercase;
+  font-weight: 300;
+  margin-left: 2px;
+}
+
+.footer-delete-icon {
+  height: 16px;
+  width: auto;
+}
