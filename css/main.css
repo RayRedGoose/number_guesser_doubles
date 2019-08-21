@@ -1,0 +1,80 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #d1d2d4;
+}
+
+/* HEADER STYLES */
+
+.header {
+  background-color: #404041;
+  text-align: center;
+  padding-top: 3px;
+}
+
+.title-1 {
+  color: #DD1972;
+  text-transform: uppercase;
+  margin-bottom: -5px;
+}
+
+.title-1::after {
+  content: "guesser";
+  color: #DD1972;
+  font-weight: 300;
+}
+
+.title-2 {
+  color: #FFFFFF;
+  font-weight: 300;
+  padding-bottom: 8px;
+}
+
+.title-2::before {
+  content: " ";
+  width: 48px;
+  height: 1px;
+  display: inline-block;
+  vertical-align: middle;
+  background-color: #ffffff;
+  margin-right: 8px;
+}
+
+.title-2::after {
+  content: " ";
+  width: 48px;
+  height: 1px;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  background-color: #ffffff;
+  margin-left: 8px;
+}
+
+/* MAIN STYLES */
+
+.content {
+  display: flex;
+}
+
+.section-left {
+  width: 50%;
+  background-color: #f7f7f7;
+  border-right: 2px solid #404041;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.article {
+  width: 90%;
+  background-color: #ffffff;
+  border: 1px solid #d0d2d3;
+}
+
+/* RIGHT SECTION */
