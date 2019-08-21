@@ -1,0 +1,267 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+p {
+  color: #515151;
+}
+
+/* HEADER STYLES */
+
+.header {
+  background-color: #404041;
+  text-align: center;
+}
+
+.title-1 {
+  color: #DD1972;
+  text-transform: uppercase;
+}
+
+.title-1::after {
+  content: "guesser";
+  color: #DD1972;
+  font-weight: 300;
+}
+
+.title-2 {
+  color: #FFFFFF;
+}
+
+.title-2::before {
+  content: " ";
+  width: 20px;
+  height: 1px;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  background-color: #ffffff;
+  margin-right: 10px;
+}
+
+.title-2::after {
+  content: " ";
+  width: 20px;
+  height: 1px;
+  background-color: #ffffff;
+  line-height: .5;
+  margin-left: 10px;
+}
+
+/* MAIN STYLES */
+
+.content {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  background-color: #d1d2d4;
+}
+
+.section-left {
+  width: 50%;
+  background-color: #f7f7f7;
+  border-right: 2px solid #404041;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0px;
+}
+
+.article {
+  width: 95%;
+  background-color: #ffffff;
+  border: 1px solid #d0d2d3;
+  padding: 15px;
+  margin: 10px 0px;
+}
+
+.section-right {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* LEFT SECTION */
+
+/* text styles */
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.block-title {
+  color: #606060;
+  margin-bottom: 5px;
+}
+
+.current-range {
+  margin-bottom: 15px;
+}
+
+.range-number {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* forms styles */
+
+.set-range__form {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.challenger-name__form {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.label {
+  color: #515151;
+}
+
+.input {
+  font-size: 16px;
+  padding: 7px;
+  border: 1px solid #d1d2d4;
+  margin-top: 5px;
+}
+
+.input:focus {
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(0,0,0,.5);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(0,0,0,.5);
+}
+
+.input-wrapper--range {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-wrapper--name {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-wrapper--guess {
+  width: 28%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* error styles */
+
+.error {
+  margin-top: 5px;
+  display: flex;
+}
+
+.error-icon {
+  width: 14px;
+}
+
+.error-text {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #f74d9b;
+  vertical-align: bottom;
+}
+
+.error-input {
+  border: 2px solid #f74d9b;
+}
+
+.error-input:focus {
+  border-color: #f74d9b;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(247, 77, 155, 0.5);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(247, 77, 155, 0.5);
+}
+
+/* buttons styles */
+
+.button-wrapper {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  color: #ffffff;
+  padding: 5px 25px;
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.button--dark-grey {
+  background-color: #6e6e6e;
+}
+
+.button--dark-grey:hover,
+.button--dark-grey:active {
+  background-color: #dd1972;
+}
+
+.button--light-grey {
+  background-color: #d0d2d3;
+}
+
+.button--light-grey:hover,
+.button--light-grey:active {
+  background-color: #6e6e6e;
+}
+
+/* challenger-card styles */
+
+.challenger-card-wrapper {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.challenger-card {
+  width: 50%;
+  text-align: center;
+}
+
+.challenger-card:first-child {
+  border-right: 1px solid #d0d2d3;
+}
+
+.challenger-card:last-child {
+  border-left: 1px solid #d0d2d3;
+}
+
+.challenger-name-title {
+  color: #6e6e6e;
+}
+
+.card-text {
+  font-weight: 300;
+  text-transform: lowercase;
+}
+
+.card-text--bigger {
+  font-size: 18px;
+}
+
+.guess-number {
+  color: #f74d9b;
+  font-size: 72px;
+  font-weight: 700;
+}
