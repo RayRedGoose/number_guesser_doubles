@@ -2,11 +2,15 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  border: 0;
 }
 
 body {
   font-family: 'Open Sans', sans-serif;
-  background-color: #d1d2d4;
+}
+
+p {
+  color: #515151;
 }
 
 /* HEADER STYLES */
@@ -55,6 +59,7 @@ body {
 
 .content {
   display: flex;
+  background-color: #d1d2d4;
 }
 
 .section-left {
@@ -64,12 +69,15 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 10px 0px;
 }
 
 .article {
-  width: 90%;
+  width: 95%;
   background-color: #ffffff;
   border: 1px solid #d0d2d3;
+  padding: 15px;
+  margin: 10px 0px;
 }
 
 .section-right {
@@ -77,4 +85,131 @@ body {
   flex-direction: column-reverse;
   justify-content: flex-end;
   align-items: center;
+}
+
+/* LEFT SECTION */
+
+/* text styles */
+
+.block-title {
+  color: #606060;
+  margin-bottom: 5px;
+}
+
+.current-range {
+  margin-bottom: 15px;
+}
+
+.range-number {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* forms styles */
+
+.set-range__form {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.challenger-name__form {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px;
+}
+
+.label {
+  color: #515151;
+}
+
+.input {
+  font-size: 16px;
+  padding: 5px;
+  border: 1px solid #d1d2d4;
+  margin-top: 5px;
+}
+
+.input-wrapper--range {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-wrapper--name {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-wrapper--guess {
+  width: 28%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* buttons styles */
+
+.button-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  color: #ffffff;
+  padding: 5px 25px;
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 20px;
+}
+
+.button--dark-grey {
+  background-color: #6e6e6e;
+}
+
+.button--light-grey {
+  background-color: #d0d2d3;
+}
+
+/* challenger-card styles */
+
+.challenger-card-wrapper {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.challenger-card {
+  width: 50%;
+  text-align: center;
+}
+
+.challenger-card:first-child {
+  border-right: 1px solid #d0d2d3;
+}
+
+.challenger-card:last-child {
+  border-left: 1px solid #d0d2d3;
+}
+
+.challenger-name-title {
+  color: #6e6e6e;
+}
+
+.card-text {
+  font-weight: 300;
+  text-transform: lowercase;
+}
+
+.card-text--bigger {
+  font-size: 18px;
+}
+
+.guess-number {
+  color: #f74d9b;
+  font-size: 72px;
+  font-weight: 700;
 }
