@@ -18,13 +18,14 @@ p {
 .header {
   background-color: #404041;
   text-align: center;
-  padding-top: 3px;
+  padding: 10px 0;
 }
 
 .title-1 {
+  font-size: 54px;
+  line-height: 1;
   color: #DD1972;
   text-transform: uppercase;
-  margin-bottom: -5px;
 }
 
 .title-1::after {
@@ -34,9 +35,11 @@ p {
 }
 
 .title-2 {
+  font-size: 18px;
+  line-height: 1;
   color: #FFFFFF;
   font-weight: 300;
-  padding-bottom: 8px;
+  margin: 5px 0;
 }
 
 .title-2::before {
@@ -47,13 +50,6 @@ p {
   vertical-align: middle;
   background-color: #ffffff;
   margin-right: 8px;
-  width: 20px;
-  height: 1px;
-  display: inline-block;
-  vertical-align: middle;
-  position: relative;
-  background-color: #ffffff;
-  margin-right: 10px;
 }
 
 .title-2::after {
@@ -65,17 +61,12 @@ p {
   position: relative;
   background-color: #ffffff;
   margin-left: 8px;
-  width: 20px;
-  height: 1px;
-  background-color: #ffffff;
-  line-height: .5;
-  margin-left: 10px;
 }
 
 /* MAIN STYLES */
 
 .content {
-  width: 80%;
+  width: 100%;
   margin: auto;
   display: flex;
   background-color: #d1d2d4;
@@ -295,12 +286,12 @@ p {
 
 .winner-card {
   background-color: #FFFFFF;
+  color: #6E6E6E;
   width: 85%;
   margin-top: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #6e6e6e;
 }
 
 .header-card {
@@ -331,6 +322,7 @@ p {
 }
 
 .winner-name {
+  color: #6E6E6E;
   text-transform: uppercase;
   font-weight: bold;
   font-size: 32px;
@@ -356,6 +348,7 @@ p {
 .guesses-number {
   font-size: 14px;
   font-weight: bold;
+  color: #6E6E6E;
 }
 
 .guesses-number::after {
@@ -369,6 +362,7 @@ p {
   font-size: 14px;
   font-weight: bold;
   text-transform: uppercase;
+  color: #6E6E6E;
 }
 
 .minutes-number::after {
