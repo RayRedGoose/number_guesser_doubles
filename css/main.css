@@ -42,25 +42,15 @@ p {
   margin: 5px 0;
 }
 
-.title-2::before {
+.title-2::before,
+.title-2::after {
   content: " ";
-  width: 48px;
+  width: 6%;
   height: 1px;
   display: inline-block;
   vertical-align: middle;
   background-color: #ffffff;
   margin-right: 8px;
-}
-
-.title-2::after {
-  content: " ";
-  width: 48px;
-  height: 1px;
-  display: inline-block;
-  vertical-align: middle;
-  position: relative;
-  background-color: #ffffff;
-  margin-left: 8px;
 }
 
 /* MAIN STYLES */
@@ -298,6 +288,7 @@ p {
   width: 90%;
   display: flex;
   justify-content: space-around;
+  align-items: center;
   padding: 10px 0px;
 }
 
@@ -308,8 +299,8 @@ p {
 }
 
 .vs {
-  font-size: 12px;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 1;
   font-weight: 300;
 }
 
@@ -332,7 +323,6 @@ p {
   content: "winner";
   text-transform: uppercase;
   font-weight: 300;
-  font-size: 32px;
   display: block;
   line-height: 1.0;
 }
@@ -375,4 +365,104 @@ p {
 .footer-delete-icon {
   height: 16px;
   width: auto;
+  cursor: pointer;
+}
+
+@media (max-width: 720px) {
+
+  .content {
+    flex-direction: column;
+  }
+
+  .section-left,
+  .section-right {
+    width: 100%;
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  .title-1 {
+    font-size: 24px;
+  }
+
+  .title-2 {
+    font-size: 10px;
+  }
+
+  .title-2::before,
+  .title-2::after {
+    content: " ";
+    width: 5%;
+  }
+
+  .set-range__form,
+  .challenger-name__form {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .input-wrapper--range,
+  .input-wrapper--name,
+  .input-wrapper--guess {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .button-wrapper {
+    margin-top: 10px;
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .challenger-card-wrapper {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0px;
+  }
+
+  .challenger-card {
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .challenger-card:first-child {
+    border-right: 0;
+    border-bottom: 1px solid #d0d2d3;
+  }
+
+  .challenger-card:last-child {
+    border-left: 0;
+    border-top: 1px solid #d0d2d3;
+  }
+
+  .winner-card {
+    width: 95%;
+  }
+
+  .header-card {
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0px;
+  }
+
+  .vs {
+    margin: 5px 0;
+  }
+
+  .winner-name {
+    font-size: 28px;
+  }
+
+  .footer-card {
+    justify-content: space-between;
+    padding: 10px;
+  }
 }
