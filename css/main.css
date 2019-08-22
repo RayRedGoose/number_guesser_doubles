@@ -161,6 +161,7 @@ p {
 /* error styles */
 
 .error {
+  display: none;
   margin-top: 5px;
   display: flex;
 }
