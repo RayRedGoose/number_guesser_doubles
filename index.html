@@ -36,17 +36,14 @@
           <form class="challenger-name__form" action="index.html" method="post">
             <div class="input-wrapper--name">
               <label class="label" for="name-challenger-1">Name</label>
-              <input id="name-challenger-1" class="input input-name error-input" type="text" name="" value="">
+              <input id="name-challenger-1" class="input input-name" type="text" name="" value="">
             </div>
             <div class="input-wrapper--guess">
               <label class="label" for="guess-challenger-1">Guess</label>
               <input id="guess-1" class="input input-guess" type="text" name="" value="">
             </div>
           </form>
-          <div class="error">
-            <img class="error-icon" src="images/error-icon.svg" alt="error-icon">
-            <p class="error-text">Enter a name</p>
-          </div>
+          <div class="error"></div>
           <h3 class="block-title mt-20">Challenger 2</h3>
           <form class="challenger-name__form" action="index.html" method="post">
             <div class="input-wrapper--name">
@@ -58,6 +55,7 @@
               <input id="guess-2" class="input input-guess" type="text" name="" value="">
             </div>
           </form>
+          <div class="error"></div>
           <div class="button-wrapper">
             <button id="submit-button" class="button button--dark-grey">SUBMIT GUESS</button>
             <button id="reset-button" class="button button--light-grey">RESET GAME</button>
@@ -131,5 +129,6 @@
       </section>
     </main>
     <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/challenger-name-input.js"></script>
   </body>
 </html>
