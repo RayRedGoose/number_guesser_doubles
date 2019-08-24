@@ -32,7 +32,7 @@ submitButton.addEventListener('click', function(event){
   var errorGuessVal = "<p class='error-text'>Guess must have only numeric symbols</p>";
 
 
-  if (nameOneValue != "" || nameTwoValue != "" || guessOneValue != "" || guessTwoValue != "") {
+  if (nameOneValue != "" && nameTwoValue != "" && guessOneValue != "" && guessTwoValue != "") {
 
     if(nameOneValue.match(letters) && nameTwoValue.match(letters)) {
 
@@ -66,6 +66,8 @@ submitButton.addEventListener('click', function(event){
         if (!guessOneValue.match(numbers) && !guessTwoValue.match(numbers)) {
 
           // error if both guess inputs are not numeric types
+          errorBoxes[2].style.display = 'flex';
+          errorBoxes[3].style.display = 'flex';
 
           errorBoxes[2].innerHTML = errorContent + errorGuessVal;
           errorBoxes[3].innerHTML = errorContent + errorGuessVal;
@@ -76,6 +78,7 @@ submitButton.addEventListener('click', function(event){
         } else if (!guessOneValue.match(numbers)) {
 
           // error if challenger 1 guess input is not numeric types
+          errorBoxes[2].style.display = 'flex';
 
           errorBoxes[2].innerHTML = errorContent + errorGuessVal;
 
@@ -84,6 +87,7 @@ submitButton.addEventListener('click', function(event){
         } else if (!guessTwoValue.match(numbers)) {
 
           // error if challenger 2 guess input is not numeric types
+          errorBoxes[3].style.display = 'flex';
 
           errorBoxes[3].innerHTML = errorContent + errorGuessVal;
 
@@ -98,6 +102,8 @@ submitButton.addEventListener('click', function(event){
       if (!nameOneValue.match(letters) && !nameTwoValue.match(letters)) {
 
         // errors if both names are not alpha-numeric types
+        errorBoxes[2].style.display = 'flex';
+        errorBoxes[3].style.display = 'flex';
 
         errorBoxes[2].innerHTML = errorContent + errorNameVal;
         errorBoxes[3].innerHTML = errorContent + errorNameVal;
@@ -108,6 +114,7 @@ submitButton.addEventListener('click', function(event){
       } else if (!nameOneValue.match(letters)) {
 
         // errors if challenger 1 name is not alpha-numeric type
+        errorBoxes[2].style.display = 'flex';
 
         errorBoxes[2].innerHTML = errorContent + errorNameVal;
 
@@ -116,6 +123,7 @@ submitButton.addEventListener('click', function(event){
       } else if (!nameTwoValue.match(letters)) {
 
         // errors if challenger 2 name is not alpha-numeric type
+        errorBoxes[3].style.display = 'flex';
 
         errorBoxes[3].innerHTML = errorContent + errorNameVal;
 
@@ -132,6 +140,8 @@ submitButton.addEventListener('click', function(event){
     if (nameOneValue == "" && nameTwoValue == "" && guessOneValue == "" && guessTwoValue == "") {
 
       // errors if all inputs are empty
+      errorBoxes[2].style.display = 'flex';
+      errorBoxes[3].style.display = 'flex';
 
       errorBoxes[2].innerHTML = errorContent + errorAll;
       errorBoxes[3].innerHTML = errorContent + errorAll;
@@ -141,9 +151,31 @@ submitButton.addEventListener('click', function(event){
       guessOneInput.classList.add('error-input');
       guessTwoInput.classList.add('error-input');
 
+    } else if (nameOneValue == "" && guessOneValue == "") {
+
+      // errors if all inputs are empty
+      errorBoxes[2].style.display = 'flex';
+
+      errorBoxes[2].innerHTML = errorContent + errorAll;
+
+      nameOneInput.classList.add('error-input');
+      guessOneInput.classList.add('error-input');
+
+    } else if (nameTwoValue == "" && guessTwoValue == "") {
+
+      // errors if all inputs are empty
+      errorBoxes[3].style.display = 'flex';
+
+      errorBoxes[3].innerHTML = errorContent + errorAll;
+
+      nameTwoInput.classList.add('error-input');
+      guessTwoInput.classList.add('error-input');
+
     } else if (nameOneValue == "" && nameTwoValue) {
 
       // errors if name inputs are empty
+      errorBoxes[2].style.display = 'flex';
+      errorBoxes[3].style.display = 'flex';
 
       errorBoxes[2].innerHTML = errorContent + errorName;
       errorBoxes[3].innerHTML = errorContent + errorName;
@@ -154,6 +186,8 @@ submitButton.addEventListener('click', function(event){
     } else if (guessOneValue == "" && guessTwoValue != "") {
 
       // errors if guess inputs are empty
+      errorBoxes[2].style.display = 'flex';
+      errorBoxes[3].style.display = 'flex';
 
       errorBoxes[2].innerHTML = errorContent + errorGuess;
       errorBoxes[3].innerHTML = errorContent + errorGuess;
@@ -164,6 +198,7 @@ submitButton.addEventListener('click', function(event){
     } else if (nameOneValue == "") {
 
       // errors if challenger 1 name input is empty
+      errorBoxes[2].style.display = 'flex';
 
       errorBoxes[2].innerHTML = errorContent + errorName;
 
@@ -172,6 +207,7 @@ submitButton.addEventListener('click', function(event){
     } else if (nameTwoValue == "") {
 
       // errors if challenger 2 name input is empty
+      errorBoxes[3].style.display = 'flex';
 
       errorBoxes[3].innerHTML = errorContent + errorName;
 
@@ -180,6 +216,7 @@ submitButton.addEventListener('click', function(event){
     } else if (guessOneValue == "") {
 
       // errors if challenger 1 guess input is empty
+      errorBoxes[2].style.display = 'flex';
 
       errorBoxes[2].innerHTML = errorContent + errorGuess;
 
@@ -188,6 +225,8 @@ submitButton.addEventListener('click', function(event){
     } else if (guessTwoValue == "") {
 
       // errors if challenger 2 guess input is empty
+
+      errorBoxes[3].style.display = 'flex';
 
       errorBoxes[3].innerHTML = errorContent + errorGuess;
 
