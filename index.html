@@ -20,15 +20,14 @@
             <div class="input-wrapper--range">
               <label class="label" for="get-min-range">Min Range</label>
               <input id="get-min-range" class="input range" type="number">
-              <div class="error"></div>
             </div>
             <div class="input-wrapper--range">
               <label class="label" for="get-max-range">Max Range</label>
               <input id="get-max-range" class="input range" type="number">
-              <div class="error"></div>
             </div>
             <button id="update-button" class="button button--dark-grey">Update</button>
           </form>
+          <div class="error"></div>
         </article>
         <article class="article challenger-name">
           <p class="current-range">The Current Range is <span id="post-min-range" class="range-number">1</span> to <span id="post-max-range" class="range-number">100</span></p>
@@ -106,7 +105,7 @@
             <p class="name-one winner-name">Challenger 1 name</p>
           </div>
           <div class="footer-card">
-              <p class="guesses-number">47</p>
+              <p id="checking" class="guesses-number">47</p>
               <p class="minutes-number">1.35</p>
               <img class="footer-delete-icon" src="images/delete-icon.svg" width="350" />
           </div>
