@@ -1,7 +1,33 @@
 var submitButton = document.querySelector('#submit-button');
+var clearButton = document.querySelector('#clear-button');
+var resetButton = document.querySelector('#reset-button');
+var updateButton = document.querySelector('#update-button');
+
+var forms = document.querySelectorAll('form');
+var inputs = document.querySelectorAll('input');
+var errorBoxes = document.querySelectorAll('.error');
+
+clearButton.addEventListener('click', function() {
+
+  clearForms();
+
+  disableButton();
+
+});
+
+resetButton.addEventListener('click', function() {
+
+  var randomNumber = Math.round(parseInt(document.querySelector('#get-min-range').value, 10) - 0.5 + Math.random() * (parseInt(document.querySelector('#get-max-range').value, 10) - parseInt(document.querySelector('#get-min-range').value, 10) + 1));
+
+  clearForms();
+
+  disableButton();
+
+});
 
 submitButton.addEventListener('click', function(event){
   event.preventDefault();
+  const start = new Date().getTime();
 
   // inputs vars
   var nameOneInput = document.querySelector('#name-challenger-1');
@@ -12,86 +38,146 @@ submitButton.addEventListener('click', function(event){
   // input values vars
   var nameOneValue = nameOneInput.value;
   var nameTwoValue = nameTwoInput.value;
-  var guessOneValue = guessOneInput.value;
-  var guessTwoValue = guessTwoInput.value;
+  var guessOneValue = parseInt(guessOneInput.value, 10);
+  var guessTwoValue = parseInt(guessTwoInput.value, 10);
+  var minRange = parseInt(document.querySelector('#get-min-range').value, 10);
+  var maxRange = parseInt(document.querySelector('#get-max-range').value, 10);
+
+  var nameOnePlace = document.querySelectorAll('.name-one');
+  var nameTwoPlace = document.querySelectorAll('.name-two');
+  var guessOnePlace = document.querySelectorAll('.guess-one');
+  var guessTwoPlace = document.querySelectorAll('.guess-two');
 
   // ***VALIDATION OF CHELLENGER FORM***
 
   //parameters for validation
-  var numbers = /^[0-9]+$/;
   var letters = /^[0-9a-zA-Z]+$/;
 
   // error blocks
   var errorBoxes = document.querySelectorAll('.error');
-  console.log(errorBoxes);
   var errorContent = "<img class='error-icon' src='images/error-icon.svg' alt='error-icon'>";
   var errorAll = "<p class='error-text'>Enter name and guess</p>";
   var errorName = "<p class='error-text'>Enter name</p>";
   var errorNameVal = "<p class='error-text'>Name must have only alpha-numeric symbols</p>";
   var errorGuess = "<p class='error-text'>Enter guess</p>";
+  var errorGuess = "<p class='error-text'>Guess is not number</p>";
   var errorGuessVal = "<p class='error-text'>Guess must have only numeric symbols</p>";
+  var errorOutRange = "<p class='error-text'>Guess must be within range</p>";
 
+  function showErrors(index, inputPath, error) {
 
-  if (nameOneValue != "" && nameTwoValue != "" && guessOneValue != "" && guessTwoValue != "") {
+    errorBoxes[index].style.display = 'flex';
+    errorBoxes[index].innerHTML = errorContent + error;
+
+    inputPath.classList.add('error-input');
+
+  };
+
+  function replaceTextToArray(array, value) {
+
+    for (var i = 0; i < array.length; i++) {
+      array[i].innerText = value;
+    };
+
+  };
+
+  if (nameOneValue != "" && nameTwoValue != "" && guessOneInput.value != "" && guessTwoInput.value != "") {
 
     if(nameOneValue.match(letters) && nameTwoValue.match(letters)) {
 
+      if (((minRange < guessOneValue || guessOneValue == minRange) && (maxRange > guessOneValue || guessOneValue == maxRange) && (minRange < guessTwoValue || guessTwoValue == minRange) && (maxRange > guessTwoValue || guessTwoValue == maxRange))) {
 
-      if(guessOneValue.match(numbers) && guessTwoValue.match(numbers)) {
-        var nameOnePlace = document.querySelectorAll('.name-one');
-        var nameTwoPlace = document.querySelectorAll('.name-two');
-        var guessOnePlace = document.querySelectorAll('.guess-one');
-        var guessTwoPlace = document.querySelectorAll('.guess-two');
+        activateButton();
 
-        for (var i = 0; i < nameOnePlace.length; i++) {
-          nameOnePlace[i].innerText = nameOneValue;
+        replaceTextToArray(nameOnePlace, nameOneValue);
+        replaceTextToArray(nameTwoPlace, nameTwoValue);
+        replaceTextToArray(guessOnePlace, guessOneValue);
+        replaceTextToArray(guessTwoPlace, guessTwoValue);
+
+        var randomNumber = Math.round(minRange - 0.5 + Math.random() * (maxRange - minRange + 1));
+        var guessesPlaces = document.querySelectorAll('.guesses-number')
+
+        replaceTextToArray(guessesPlaces, randomNumber);
+
+        var resultOne = document.querySelector('#challenger-one-result');
+        var resultTwo = document.querySelector('#challenger-two-result');
+
+        // *** GAME ***
+
+        if (guessOneValue < randomNumber) {
+
+          resultOne.innerText = "that's too low!"
+
+        } else if (guessOneValue > randomNumber) {
+
+          resultOne.innerText = "that's too high!"
+
         }
 
-        for (var i = 0; i < nameTwoPlace.length; i++) {
-          nameTwoPlace[i].innerText = nameTwoValue;
+        if (guessTwoValue < randomNumber) {
+
+          resultTwo.innerText = "that's too low!"
+
+        } else if (guessTwoValue > randomNumber) {
+
+          resultTwo.innerText = "that's too high!"
+
         }
 
-        for (var i = 0; i < guessOnePlace.length; i++) {
-          guessOnePlace[i].innerText = guessOneValue;
-        }
+        //***WINNERS***
 
-        for (var i = 0; i < guessTwoPlace.length; i++) {
-          guessTwoPlace[i].innerText = guessTwoValue;
+        var winnerNames = document.querySelectorAll('.winner-name');
+        var minutesNumberPlaces = document.querySelectorAll('.minutes-number');
+
+        if (guessOneValue == randomNumber) {
+
+          alert('BOOM!');
+          resultOne.innerText = "Match!";
+
+          replaceTextToArray(winnerNames, nameOneValue);
+
+          const end = new Date().getTime();
+          var gameTime = parseInt(((end - start) / 6000) * 100)/100;
+
+          replaceTextToArray(minutesNumberPlaces, gameTime);
+
+        } else if (guessTwoValue == randomNumber) {
+
+          alert('BOOM!');
+          resultTwo.innerText = "Match!"
+
+          replaceTextToArray(winnerNames, nameTwoValue);
+
+          const end = new Date().getTime();
+          var gameTime = parseInt(((end - start) / 6000) * 100)/100;
+
+          replaceTextToArray(minutesNumberPlaces, gameTime);
+
+        } else {
+
+          replaceTextToArray(winnerNames, "No");
+
         }
 
       } else {
 
-        // error if guess inputs are not numeric types
+        if ((guessTwoValue < minRange) && (guessOneValue < minRange)) {
 
-        if (!guessOneValue.match(numbers) && !guessTwoValue.match(numbers)) {
+          showErrors(1, guessOneInput, errorOutRange);
+          showErrors(2, guessTwoInput, errorOutRange);
 
-          // error if both guess inputs are not numeric types
-          errorBoxes[2].style.display = 'flex';
-          errorBoxes[3].style.display = 'flex';
+        } else if ((maxRange < guessOneValue) && (maxRange < guessTwoValue)) {
 
-          errorBoxes[2].innerHTML = errorContent + errorGuessVal;
-          errorBoxes[3].innerHTML = errorContent + errorGuessVal;
+          showErrors(1, guessOneInput, errorOutRange);
+          showErrors(2, guessTwoInput, errorOutRange);
 
-          guessOneInput.classList.add('error-input');
-          guessTwoInput.classList.add('error-input');
+        } else if ((guessOneValue < minRange) || (maxRange < guessOneValue)) {
 
-        } else if (!guessOneValue.match(numbers)) {
+          showErrors(1, guessOneInput, errorOutRange);
 
-          // error if challenger 1 guess input is not numeric types
-          errorBoxes[2].style.display = 'flex';
+        } else if ((guessTwoValue < minRange) || (maxRange < guessTwoValue)) {
 
-          errorBoxes[2].innerHTML = errorContent + errorGuessVal;
-
-          guessOneInput.classList.add('error-input');
-
-        } else if (!guessTwoValue.match(numbers)) {
-
-          // error if challenger 2 guess input is not numeric types
-          errorBoxes[3].style.display = 'flex';
-
-          errorBoxes[3].innerHTML = errorContent + errorGuessVal;
-
-          guessTwoInput.classList.add('error-input');
+          showErrors(2, guessTwoInput, errorOutRange);
 
         }
 
@@ -102,32 +188,21 @@ submitButton.addEventListener('click', function(event){
       if (!nameOneValue.match(letters) && !nameTwoValue.match(letters)) {
 
         // errors if both names are not alpha-numeric types
-        errorBoxes[2].style.display = 'flex';
-        errorBoxes[3].style.display = 'flex';
 
-        errorBoxes[2].innerHTML = errorContent + errorNameVal;
-        errorBoxes[3].innerHTML = errorContent + errorNameVal;
-
-        nameOneInput.classList.add('error-input');
-        nameTwoInput.classList.add('error-input');
+        showErrors(1, nameOneInput, errorNameVal);
+        showErrors(2, nameTwoInput, errorNameVal);
 
       } else if (!nameOneValue.match(letters)) {
 
-        // errors if challenger 1 name is not alpha-numeric type
-        errorBoxes[2].style.display = 'flex';
+        // error if challenger 1 name is not alpha-numeric type
 
-        errorBoxes[2].innerHTML = errorContent + errorNameVal;
-
-        nameOneInput.classList.add('error-input');
+        showErrors(1, nameOneInput, errorNameVal);
 
       } else if (!nameTwoValue.match(letters)) {
 
         // errors if challenger 2 name is not alpha-numeric type
-        errorBoxes[3].style.display = 'flex';
 
-        errorBoxes[3].innerHTML = errorContent + errorNameVal;
-
-        nameTwoInput.classList.add('error-input');
+        showErrors(2, nameTwoInput, errorNameVal);
 
       }
 
@@ -137,100 +212,69 @@ submitButton.addEventListener('click', function(event){
 
     //error if all or some inputs are empty
 
-    if (nameOneValue == "" && nameTwoValue == "" && guessOneValue == "" && guessTwoValue == "") {
+    if (nameOneValue == "" && nameTwoValue == "" && guessOneInput.value == "" && guessTwoInput.value == "") {
 
       // errors if all inputs are empty
-      errorBoxes[2].style.display = 'flex';
-      errorBoxes[3].style.display = 'flex';
 
-      errorBoxes[2].innerHTML = errorContent + errorAll;
-      errorBoxes[3].innerHTML = errorContent + errorAll;
+      showErrors(1, nameOneInput, errorAll);
+      showErrors(2, nameTwoInput, errorAll);
 
-      nameOneInput.classList.add('error-input');
-      nameTwoInput.classList.add('error-input');
       guessOneInput.classList.add('error-input');
       guessTwoInput.classList.add('error-input');
 
-    } else if (nameOneValue == "" && guessOneValue == "") {
+    } else if (nameOneValue == "" && guessOneInput.value == "") {
 
-      // errors if all inputs are empty
-      errorBoxes[2].style.display = 'flex';
+      // errors if all first inputs are empty
 
-      errorBoxes[2].innerHTML = errorContent + errorAll;
+      showErrors(1, nameOneInput, errorAll);
 
-      nameOneInput.classList.add('error-input');
       guessOneInput.classList.add('error-input');
 
-    } else if (nameTwoValue == "" && guessTwoValue == "") {
+    } else if (nameTwoValue == "" && guessTwoInput.value == "") {
 
-      // errors if all inputs are empty
-      errorBoxes[3].style.display = 'flex';
+      // errors if all second inputs are empty
 
-      errorBoxes[3].innerHTML = errorContent + errorAll;
+      showErrors(2, nameTwoInput, errorAll);
 
-      nameTwoInput.classList.add('error-input');
       guessTwoInput.classList.add('error-input');
 
     } else if (nameOneValue == "" && nameTwoValue) {
 
       // errors if name inputs are empty
-      errorBoxes[2].style.display = 'flex';
-      errorBoxes[3].style.display = 'flex';
 
-      errorBoxes[2].innerHTML = errorContent + errorName;
-      errorBoxes[3].innerHTML = errorContent + errorName;
+      showErrors(1, nameOneInput, errorName);
+      showErrors(2, nameTwoInput, errorName);
 
-      nameOneInput.classList.add('error-input');
-      nameTwoInput.classList.add('error-input');
-
-    } else if (guessOneValue == "" && guessTwoValue != "") {
+    } else if (guessOneInput.value == "" && guessTwoInput.value != "") {
 
       // errors if guess inputs are empty
-      errorBoxes[2].style.display = 'flex';
-      errorBoxes[3].style.display = 'flex';
 
-      errorBoxes[2].innerHTML = errorContent + errorGuess;
-      errorBoxes[3].innerHTML = errorContent + errorGuess;
-
-      guessOneInput.classList.add('error-input');
-      guessTwoInput.classList.add('error-input');
+      showErrors(1, guessOneInput, errorGuess);
+      showErrors(2, guessTwoInput, errorGuess);
 
     } else if (nameOneValue == "") {
 
       // errors if challenger 1 name input is empty
-      errorBoxes[2].style.display = 'flex';
 
-      errorBoxes[2].innerHTML = errorContent + errorName;
-
-      nameOneInput.classList.add('error-input');
+      showErrors(1, nameOneInput, errorName);
 
     } else if (nameTwoValue == "") {
 
       // errors if challenger 2 name input is empty
-      errorBoxes[3].style.display = 'flex';
 
-      errorBoxes[3].innerHTML = errorContent + errorName;
+      showErrors(2, nameTwoInput, errorName);
 
-      nameTwoInput.classList.add('error-input');
-
-    } else if (guessOneValue == "") {
+    } else if (guessOneInput.value == "") {
 
       // errors if challenger 1 guess input is empty
-      errorBoxes[2].style.display = 'flex';
 
-      errorBoxes[2].innerHTML = errorContent + errorGuess;
-
-      guessOneInput.classList.add('error-input');
+      showErrors(1, guessOneInput, errorGuess);
 
     } else if (guessTwoValue == "") {
 
       // errors if challenger 2 guess input is empty
 
-      errorBoxes[3].style.display = 'flex';
-
-      errorBoxes[3].innerHTML = errorContent + errorGuess;
-
-      guessTwoInput.classList.add('error-input');
+      showErrors(2, guessTwoInput, errorGuess);
 
     }
 
@@ -262,3 +306,56 @@ submitButton.addEventListener('click', function(event){
   }
 
 });
+
+function clearForms() {
+
+  for (var i = 0; i < forms.length; i++) {
+
+    forms[i].reset();
+
+  };
+
+  for (var i = 0; i < inputs.length; i++) {
+
+    inputs[i].classList.remove('error-input');
+
+  };
+
+  for (var i = 0; i < errorBoxes.length; i++) {
+
+    errorBoxes[i].style.display = 'none';
+
+  };
+
+};
+
+for (var i = 0; i < inputs.length; i++) {
+
+  inputs[i].addEventListener('input', function() {
+
+    clearButton.classList.add('button--dark-grey');
+    clearButton.classList.remove('button--light-grey');
+
+  });
+
+};
+
+function disableButton() {
+
+  clearButton.classList.remove('button--dark-grey');
+  clearButton.classList.add('button--light-grey');
+
+  resetButton.classList.remove('button--dark-grey');
+  resetButton.classList.add('button--light-grey');
+
+}
+
+function activateButton() {
+
+  clearButton.classList.add('button--dark-grey');
+  clearButton.classList.remove('button--light-grey');
+
+  resetButton.classList.add('button--dark-grey');
+  resetButton.classList.remove('button--light-grey');
+
+}

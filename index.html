@@ -16,7 +16,7 @@
       <section class="section-left">
         <article class="article set-range">
           <h3 class="block-title">Set Range</h3>
-          <form class="set-range__form" action="index.html" method="post">
+          <form id="set-range-form" class="set-range__form" action="index.html" method="post">
             <div class="input-wrapper--range">
               <label class="label" for="get-min-range">Min Range</label>
               <input id="get-min-range" class="input range" type="number">
@@ -32,7 +32,7 @@
         <article class="article challenger-name">
           <p class="current-range">The Current Range is <span id="post-min-range" class="range-number">1</span> to <span id="post-max-range" class="range-number">100</span></p>
           <h3 class="block-title">Challenger 1</h3>
-          <form class="challenger-name__form" action="index.html" method="post">
+          <form id="challenger-one-name-form" class="challenger-name__form" action="index.html" method="post">
             <div class="input-wrapper--name">
               <label class="label" for="name-challenger-1">Name</label>
               <input id="name-challenger-1" class="input input-name" type="text" name="" value="">
@@ -44,7 +44,7 @@
           </form>
           <div class="error"></div>
           <h3 class="block-title mt-20">Challenger 2</h3>
-          <form class="challenger-name__form" action="index.html" method="post">
+          <form id="challenger-two-name-form" class="challenger-name__form" action="index.html" method="post">
             <div class="input-wrapper--name">
               <label class="label" for="name-challenger-2">Name</label>
               <input id="name-challenger-2" class="input input-name" type="text" name="" value="">
@@ -68,13 +68,13 @@
               <h4 class="name-one challenger-name-title">Challenger 1 Name</h4>
               <p class="card-text">current guess</p>
               <p class="guess-one guess-number">97</p>
-              <p class="card-text card-text--bigger">that's too high</p>
+              <p id="challenger-one-result" class="card-text card-text--bigger">that's too high</p>
             </div>
             <div class="challenger-card">
               <h4 class="name-two challenger-name-title">Challenger 2 Name</h4>
               <p class="card-text">current guess</p>
               <p class="guess-two guess-number">3</p>
-              <p class="card-text card-text--bigger">that's too low</p>
+              <p id="challenger-two-result" class="card-text card-text--bigger">that's too low</p>
             </div>
           </div>
         </article>
@@ -87,7 +87,7 @@
             <span class="name-two header-name">Challenger 2 name</span>
            </div>
           <div class="winner-wrapper">
-            <p class="name-one winner-name">Challenger 1 name</p>
+            <p class="winner-name">Challenger 1 name</p>
           </div>
           <div class="footer-card">
               <p class="guesses-number">47</p>
@@ -102,7 +102,7 @@
             <span class="name-two header-name">Challenger 2 name</span>
            </div>
           <div class="winner-wrapper">
-            <p class="name-one winner-name">Challenger 1 name</p>
+            <p class="winner-name">Challenger 1 name</p>
           </div>
           <div class="footer-card">
               <p id="checking" class="guesses-number">47</p>
@@ -117,7 +117,7 @@
             <span class="name-two header-name">Challenger 2 name</span>
            </div>
           <div class="winner-wrapper">
-            <p class="name-two winner-name">Challenger 2 name</p>
+            <p class="winner-name">Challenger 2 name</p>
           </div>
           <div class="footer-card">
               <p class="guesses-number">47</p>
