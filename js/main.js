@@ -7,7 +7,7 @@ var clearButton = document.querySelector('#clear-button');
 var resetButton = document.querySelector('#reset-button');
 var updateButton = document.querySelector('#update-button');
 
-// Function for top article empty-field validation.
+
 
 
 
@@ -21,55 +21,65 @@ updateButton.addEventListener("click", function(event) {
   var postMinRangeValue = document.querySelector('#post-min-range');
   var getMaxRangeValue = document.querySelector('#get-max-range').value;
   var postMaxRangeValue = document.querySelector('#post-max-range');
+  var selectMinRangeId = document.querySelector('#get-min-range')
+  var selectMaxRangeId = document.querySelector('#get-max-range')
   var errorBoxes = document.querySelectorAll('.error');
   var errorContent = "<img class='error-icon' src='images/error-icon.svg' alt='error-icon'>";
   var errorNumber = "<p class='error-text'>Enter number</p>";
+  var errorComparison = "<p class='error-text'>Check that your minimum and maximum values make sense</p>"
 
+  // Function for displaying error content per conditional failures.
+  function showErrors(index, inputPath, error) {
+
+    errorBoxes[index].style.display = 'flex';
+
+    errorBoxes[index].innerHTML = errorContent + error;
+
+    inputPath.classList.add('error-input');
+  }
+
+  // Beginning of conditionals involving empty-field validation
   if (getMinRangeValue != "" && getMaxRangeValue != "") {
 
-    postMinRangeValue.innerText = getMinRangeValue;
-    postMaxRangeValue.innerText = getMaxRangeValue;
+    // Beginning of conditionals involving integer min < max comparison validation
+    if (parseInt(getMinRangeValue, 10) < parseInt(getMaxRangeValue, 10)) {
 
-// Section within function(which involves another function) that generates the random "Winning" number
+      postMinRangeValue.innerText = getMinRangeValue;
 
-    function randomNumber(min, max) {
-      let rand = min - 0.5 + Math.random() * (max - min + 1);
-      return Math.round(rand);
-    };
+      postMaxRangeValue.innerText = getMaxRangeValue;
 
-    var randomIntegerValue = randomNumber(getMinRangeValue, getMaxRangeValue);
-    random = randomIntegerValue;
+      // Section within function(which involves another function) that generates the random "Winning" number
 
-  } else {
+      function randomNumber(min, max) {
 
-      if (getMinRangeValue == "" && getMaxRangeValue == "") {
-        errorBoxes[0].style.display = "flex";
+        let rand = min - 0.5 + Math.random() * (max - min + 1);
 
-        errorBoxes[0].innerHTML = errorContent + errorNumber;
+        return Math.round(rand);
+      };
 
-        postMinRangeValue.classList.add('.error-input');
+      var randomIntegerValue = randomNumber(getMinRangeValue, getMaxRangeValue);
 
-        postMaxRangeValue.classList.add('.error-input');
+      random = randomIntegerValue;
 
-        errorBoxes[1].style.display = "flex";
+    } else if (parseInt(getMinRangeValue, 10) > parseInt(getMaxRangeValue, 10)) {
 
-        errorBoxes[1].innerHTML = errorContent + errorNumber;
+        showErrors(0, selectMinRangeId, errorComparison);
 
-      } else if (getMinRangeValue == "") {
-
-        errorBoxes[0].style.display = "flex";
-
-        errorBoxes[0].innerHTML = errorContent + errorNumber;
-
-        postMinRangeValue.classList.add('.error-input');
-
-      } else if (getMaxRangeValue == "") {
-
-        errorBoxes[1].style.display = "flex";
-
-        errorBoxes[1].innerHTML = errorContent + errorNumber;
-
-        postMaxRangeValue.classList.add('.error-input');
+        showErrors(0, selectMaxRangeId, errorComparison);
       }
-  }
-});
+
+    } else if (getMinRangeValue == "" && getMaxRangeValue == "") {
+
+        showErrors(0, selectMinRangeId, errorNumber);
+
+        showErrors(0, selectMaxRangeId, errorNumber);
+
+        } else if (getMinRangeValue == "") {
+
+          showErrors(0, selectMinRangeId, errorNumber);
+
+        } else if (getMaxRangeValue == "") {
+
+          showErrors(0, selectMaxRangeId, errorNumber);
+        }
+    });
