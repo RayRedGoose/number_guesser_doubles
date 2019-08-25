@@ -220,11 +220,6 @@ p {
   background-color: #d0d2d3;
 }
 
-.button--light-grey:hover,
-.button--light-grey:active {
-  background-color: #6e6e6e;
-}
-
 /* challenger-card styles */
 
 .challenger-card-wrapper {
