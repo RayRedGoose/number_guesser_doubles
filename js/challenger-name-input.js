@@ -7,6 +7,8 @@ var forms = document.querySelectorAll('form');
 var inputs = document.querySelectorAll('input');
 var errorBoxes = document.querySelectorAll('.error');
 
+var winners = [];
+
 clearButton.addEventListener('click', function() {
 
   clearForms();
@@ -25,28 +27,34 @@ resetButton.addEventListener('click', function() {
 
 });
 
+
+
 submitButton.addEventListener('click', function(event){
   event.preventDefault();
   const start = new Date().getTime();
 
+  class Challenger {
+    constructor(namePath, guessPath, namePlaces, guessPlace, resultPlace) {
+      this.namePath = namePath;
+      this.guessPath = guessPath;
+      this.name = namePath.value;
+      this.guessString = guessPath.value
+      this.guess = parseInt(this.guessString, 10);
+      this.namePlaces = namePlaces;
+      this.guessPlace = guessPlace;
+      this.resultPlace = resultPlace;
+    }
+
+  }
+
+  var challengerOne = new Challenger(document.querySelector('#name-challenger-1'), document.querySelector('#guess-1'), document.querySelectorAll('.name-one'), document.querySelector('.guess-one'), document.querySelector('#challenger-one-result'));
+
+  var challengerTwo = new Challenger(document.querySelector('#name-challenger-2'), document.querySelector('#guess-2'), document.querySelectorAll('.name-two'), document.querySelector('.guess-two'), document.querySelector('#challenger-two-result'));
+
   // inputs vars
-  var nameOneInput = document.querySelector('#name-challenger-1');
-  var nameTwoInput = document.querySelector('#name-challenger-2');
-  var guessOneInput = document.querySelector('#guess-1');
-  var guessTwoInput = document.querySelector('#guess-2');
 
-  // input values vars
-  var nameOneValue = nameOneInput.value;
-  var nameTwoValue = nameTwoInput.value;
-  var guessOneValue = parseInt(guessOneInput.value, 10);
-  var guessTwoValue = parseInt(guessTwoInput.value, 10);
-  var minRange = parseInt(document.querySelector('#get-min-range').value, 10);
-  var maxRange = parseInt(document.querySelector('#get-max-range').value, 10);
-
-  var nameOnePlace = document.querySelectorAll('.name-one');
-  var nameTwoPlace = document.querySelectorAll('.name-two');
-  var guessOnePlace = document.querySelectorAll('.guess-one');
-  var guessTwoPlace = document.querySelectorAll('.guess-two');
+  var minRange = parseInt(document.querySelector('#post-min-range').innerText, 10);
+  var maxRange = parseInt(document.querySelector('#post-max-range').innerText, 10);
 
   // ***VALIDATION OF CHELLENGER FORM***
 
@@ -54,8 +62,6 @@ submitButton.addEventListener('click', function(event){
   var letters = /^[0-9a-zA-Z]+$/;
 
   // error blocks
-  var errorBoxes = document.querySelectorAll('.error');
-  var errorContent = "<img class='error-icon' src='images/error-icon.svg' alt='error-icon'>";
   var errorAll = "<p class='error-text'>Enter name and guess</p>";
   var errorName = "<p class='error-text'>Enter name</p>";
   var errorNameVal = "<p class='error-text'>Name must have only alpha-numeric symbols</p>";
@@ -64,120 +70,96 @@ submitButton.addEventListener('click', function(event){
   var errorGuessVal = "<p class='error-text'>Guess must have only numeric symbols</p>";
   var errorOutRange = "<p class='error-text'>Guess must be within range</p>";
 
-  function showErrors(index, inputPath, error) {
+  if (challengerOne['name'] != "" && challengerTwo['name'] != "" && challengerOne['guessString']  != "" && challengerTwo['guessString'] != "") {
 
-    errorBoxes[index].style.display = 'flex';
-    errorBoxes[index].innerHTML = errorContent + error;
+    if(challengerOne['name'].match(letters) && challengerTwo['name'].match(letters)) {
 
-    inputPath.classList.add('error-input');
+      if (((minRange < challengerOne['guess'] || challengerOne['guess'] == minRange) && (maxRange > challengerOne['guess'] || challengerOne['guess'] == maxRange) && (minRange < challengerTwo['guess'] || challengerTwo['guess'] == minRange) && (maxRange > challengerTwo['guess'] || challengerTwo['guess'] == maxRange))) {
 
-  };
-
-  function replaceTextToArray(array, value) {
-
-    for (var i = 0; i < array.length; i++) {
-      array[i].innerText = value;
-    };
-
-  };
-
-  if (nameOneValue != "" && nameTwoValue != "" && guessOneInput.value != "" && guessTwoInput.value != "") {
-
-    if(nameOneValue.match(letters) && nameTwoValue.match(letters)) {
-
-      if (((minRange < guessOneValue || guessOneValue == minRange) && (maxRange > guessOneValue || guessOneValue == maxRange) && (minRange < guessTwoValue || guessTwoValue == minRange) && (maxRange > guessTwoValue || guessTwoValue == maxRange))) {
-
+        //make reset and clear buttons dark grey
         activateButton();
 
-        replaceTextToArray(nameOnePlace, nameOneValue);
-        replaceTextToArray(nameTwoPlace, nameTwoValue);
-        replaceTextToArray(guessOnePlace, guessOneValue);
-        replaceTextToArray(guessTwoPlace, guessTwoValue);
+        // place input values to spots
+        replaceTextToArray(challengerOne['namePlaces'], challengerOne['name']);
+        replaceTextToArray(challengerTwo['namePlaces'], challengerTwo['name']);
 
+        replaceOnce(challengerOne['guessPlace'], challengerOne['guess']);
+        replaceOnce(challengerTwo['guessPlace'], challengerTwo['guess']);
+
+        // create random number
         var randomNumber = Math.round(minRange - 0.5 + Math.random() * (maxRange - minRange + 1));
         var guessesPlaces = document.querySelectorAll('.guesses-number')
 
+        // place random number to card
         replaceTextToArray(guessesPlaces, randomNumber);
 
-        var resultOne = document.querySelector('#challenger-one-result');
-        var resultTwo = document.querySelector('#challenger-two-result');
+
+        // place results
+
+        placeResults(challengerOne, challengerTwo, randomNumber);
 
         // *** GAME ***
 
-        if (guessOneValue < randomNumber) {
-
-          resultOne.innerText = "that's too low!"
-
-        } else if (guessOneValue > randomNumber) {
-
-          resultOne.innerText = "that's too high!"
-
-        }
-
-        if (guessTwoValue < randomNumber) {
-
-          resultTwo.innerText = "that's too low!"
-
-        } else if (guessTwoValue > randomNumber) {
-
-          resultTwo.innerText = "that's too high!"
-
-        }
-
         //***WINNERS***
 
-        var winnerNames = document.querySelectorAll('.winner-name');
+        var winnerNamePlace = document.querySelector('.winner-name');
         var minutesNumberPlaces = document.querySelectorAll('.minutes-number');
 
-        if (guessOneValue == randomNumber) {
+        function winnerStuff(name, resultPlace) {
+          winnerNamePlace.innerText = name;
 
-          alert('BOOM!');
-          resultOne.innerText = "Match!";
-
-          replaceTextToArray(winnerNames, nameOneValue);
+          addWinners(winners, name);
 
           const end = new Date().getTime();
           var gameTime = parseInt(((end - start) / 6000) * 100)/100;
 
           replaceTextToArray(minutesNumberPlaces, gameTime);
 
-        } else if (guessTwoValue == randomNumber) {
+          if (minRange > 10) {
 
-          alert('BOOM!');
-          resultTwo.innerText = "Match!"
+            minRange = minRange + 10;
+            maxRange = maxRange + 10;
 
-          replaceTextToArray(winnerNames, nameTwoValue);
+          } else {
 
-          const end = new Date().getTime();
-          var gameTime = parseInt(((end - start) / 6000) * 100)/100;
+            maxRange = maxRange + 10;
 
-          replaceTextToArray(minutesNumberPlaces, gameTime);
+          }
 
-        } else {
+          console.log(minRange, maxRange);
 
-          replaceTextToArray(winnerNames, "No");
+        }
+
+        if (challengerOne['guess'] == randomNumber) {
+
+          winnerStuff(challengerOne['name'], challengerOne['resultPlace']);
+
+
+        } else if (challengerTwo['guess'] == randomNumber) {
+
+          winnerStuff(challengerTwo['name'], challengerTwo['resultPlace']);
 
         }
 
       } else {
 
-        if ((guessTwoValue < minRange) && (guessOneValue < minRange)) {
+        if ((challengerOne['guess'] < minRange) && (challengerTwo['guess'] < minRange)) {
 
-          showErrors(1, guessOneInput, errorOutRange);
-          showErrors(2, guessTwoInput, errorOutRange);
+          showErrors(1, challengerOne['guessPath'], errorOutRange);
+          showErrors(2, challengerTwo['guessPath'], errorOutRange);
 
-        } else if ((maxRange < guessOneValue) && (maxRange < guessTwoValue)) {
+        } else if ((maxRange < challengerOne['guess']) && (maxRange < challengerTwo['guess'])) {
 
-          showErrors(1, guessOneInput, errorOutRange);
-          showErrors(2, guessTwoInput, errorOutRange);
+          showErrors(1, challengerOne['guessPath'], errorOutRange);
+          showErrors(2, challengerTwo['guessPath'], errorOutRange);
 
-        } else if ((guessOneValue < minRange) || (maxRange < guessOneValue)) {
+        } else if ((challengerOne['guess'] < minRange) || (maxRange < challengerOne['guess'])) {
 
-          showErrors(1, guessOneInput, errorOutRange);
+          showErrors(1, challengerOne['guessPath'], errorOutRange);
 
-        } else if ((guessTwoValue < minRange) || (maxRange < guessTwoValue)) {
+        } else if ((challengerTwo['guess'] < minRange) || (maxRange < challengerTwo['guess'])) {
 
-          showErrors(2, guessTwoInput, errorOutRange);
+          showErrors(2, challengerTwo['guessPath'], errorOutRange);
 
         }
 
@@ -185,24 +167,24 @@ submitButton.addEventListener('click', function(event){
 
     } else {
 
-      if (!nameOneValue.match(letters) && !nameTwoValue.match(letters)) {
+      if (!challengerOne['name'].match(letters) && !challengerTwo['name'].match(letters)) {
 
         // errors if both names are not alpha-numeric types
 
-        showErrors(1, nameOneInput, errorNameVal);
-        showErrors(2, nameTwoInput, errorNameVal);
+        showErrors(1, challengerOne['namePath'], errorNameVal);
+        showErrors(2, challengerTwo['namePath'], errorNameVal);
 
-      } else if (!nameOneValue.match(letters)) {
+      } else if (!challengerOne['name'].match(letters)) {
 
         // error if challenger 1 name is not alpha-numeric type
 
-        showErrors(1, nameOneInput, errorNameVal);
+        showErrors(1, challengerOne['namePath'], errorNameVal);
 
-      } else if (!nameTwoValue.match(letters)) {
+      } else if (!challengerTwo['name'].match(letters)) {
 
         // errors if challenger 2 name is not alpha-numeric type
 
-        showErrors(2, nameTwoInput, errorNameVal);
+        showErrors(2, challengerTwo['namePath'], errorNameVal);
 
       }
 
@@ -212,69 +194,69 @@ submitButton.addEventListener('click', function(event){
 
     //error if all or some inputs are empty
 
-    if (nameOneValue == "" && nameTwoValue == "" && guessOneInput.value == "" && guessTwoInput.value == "") {
+    if (challengerOne['name'] == "" && challengerTwo['name'] == "" && challengerOne['guessString'] == "" && challengerTwo['guessString'] == "") {
 
       // errors if all inputs are empty
 
-      showErrors(1, nameOneInput, errorAll);
-      showErrors(2, nameTwoInput, errorAll);
+      showErrors(1, challengerOne['namePath'], errorAll);
+      showErrors(2, challengerTwo['namePath'], errorAll);
 
-      guessOneInput.classList.add('error-input');
-      guessTwoInput.classList.add('error-input');
+      challengerOne['guessPath'].classList.add('error-input');
+      challengerTwo['guessPath'].classList.add('error-input');
 
-    } else if (nameOneValue == "" && guessOneInput.value == "") {
+    } else if (challengerOne['name'] == "" && challengerOne['guessString'] == "") {
 
       // errors if all first inputs are empty
 
-      showErrors(1, nameOneInput, errorAll);
+      showErrors(1, challengerOne['namePath'], errorAll);
 
-      guessOneInput.classList.add('error-input');
+      challengerOne['guessPath'].classList.add('error-input');
 
-    } else if (nameTwoValue == "" && guessTwoInput.value == "") {
+    } else if (challengerTwo['name'] == "" && challengerTwo['guessString'] == "") {
 
       // errors if all second inputs are empty
 
-      showErrors(2, nameTwoInput, errorAll);
+      showErrors(2, challengerTwo['namePath'], errorAll);
 
-      guessTwoInput.classList.add('error-input');
+      challengerTwo['guessPath'].classList.add('error-input');
 
-    } else if (nameOneValue == "" && nameTwoValue) {
+    } else if (challengerOne['name'] == "" && challengerTwo['name']) {
 
       // errors if name inputs are empty
 
-      showErrors(1, nameOneInput, errorName);
-      showErrors(2, nameTwoInput, errorName);
+      showErrors(1, challengerOne['namePath'], errorName);
+      showErrors(2, challengerTwo['namePath'], errorName);
 
-    } else if (guessOneInput.value == "" && guessTwoInput.value != "") {
+    } else if (challengerOne['guessString'] == "" && challengerTwo['guessString'] != "") {
 
       // errors if guess inputs are empty
 
-      showErrors(1, guessOneInput, errorGuess);
-      showErrors(2, guessTwoInput, errorGuess);
+      showErrors(1, challengerOne['guessPath'], errorGuess);
+      showErrors(2, challengerTwo['guessPath'], errorGuess);
 
-    } else if (nameOneValue == "") {
+    } else if (challengerOne['name'] == "") {
 
       // errors if challenger 1 name input is empty
 
-      showErrors(1, nameOneInput, errorName);
+      showErrors(1, challengerOne['namePath'], errorName);
 
-    } else if (nameTwoValue == "") {
+    } else if (challengerTwo['name'] == "") {
 
       // errors if challenger 2 name input is empty
 
-      showErrors(2, nameTwoInput, errorName);
+      showErrors(2, challengerTwo['namePath'], errorName);
 
-    } else if (guessOneInput.value == "") {
+    } else if (challengerTwo['guessString'] == "") {
 
       // errors if challenger 1 guess input is empty
 
-      showErrors(1, guessOneInput, errorGuess);
+      showErrors(1, challengerOne['guessPath'], errorGuess);
 
-    } else if (guessTwoValue == "") {
+    } else if (challengerTwo['guess'] == "") {
 
       // errors if challenger 2 guess input is empty
 
-      showErrors(2, guessTwoInput, errorGuess);
+      showErrors(2, challengerTwo['guessPath'], errorGuess);
 
     }
 
@@ -282,7 +264,7 @@ submitButton.addEventListener('click', function(event){
 
   // remove error style on click
 
-  var challengerInputs = [nameOneInput, nameTwoInput, guessOneInput, guessTwoInput];
+  var challengerInputs = [challengerOne['namePath'], challengerTwo['namePath'], challengerOne['guessPath'], challengerTwo['guessPath']];
 
   for (var i = 0; i < challengerInputs.length; i++) {
 
@@ -348,7 +330,7 @@ function disableButton() {
   resetButton.classList.remove('button--dark-grey');
   resetButton.classList.add('button--light-grey');
 
-}
+};
 
 function activateButton() {
 
@@ -357,5 +339,85 @@ function activateButton() {
 
   resetButton.classList.add('button--dark-grey');
   resetButton.classList.remove('button--light-grey');
+
+};
+
+function replaceTextToArray(array, value) {
+
+  for (var i = 0; i < array.length; i++) {
+
+    array[i].innerText = value;
+
+  };
+
+};
+
+function replaceOnce(place, value) {
+
+  place.innerText = value;
+
+}
+
+function showErrors(index, inputPath, error) {
+
+  var errorContent = "<img class='error-icon' src='images/error-icon.svg' alt='error-icon'>";
+
+  errorBoxes[index].style.display = 'flex';
+  errorBoxes[index].innerHTML = errorContent + error;
+
+  inputPath.classList.add('error-input');
+
+};
+
+function addWinners(array, value) {
+
+  if (array.length < 4) {
+
+    array.push(value);
+
+  } else {
+
+    array.shift();
+    array.push(value);
+
+  }
+}
+
+function placeResults(challengerOne, challengerTwo, randomNumber) {
+
+  if (challengerOne['guess'] < randomNumber) {
+
+    replaceOnce(challengerOne['resultPlace'], "that's too low!");
+
+  } else if (challengerOne['guess'] > randomNumber) {
+
+    replaceOnce(challengerOne['resultPlace'], "that's too high!");
+
+  }
+
+  if (challengerTwo['guess'] < randomNumber) {
+
+    replaceOnce(challengerTwo['resultPlace'], "that's too low!");
+
+  } else if (challengerTwo['guess'] > randomNumber) {
+
+    replaceOnce(challengerTwo['resultPlace'], "that's too high!");
+
+  }
+
+  if (challengerOne['guess'] == randomNumber) {
+
+    replaceOnce(challengerOne['resultPlace'], "BOOM!");
+
+  } else if (challengerTwo['guess'] == randomNumber) {
+
+    replaceOnce(challengerTwo['resultPlace'], "BOOM!");
+
+  }
+}
+
+function changeMaxAndMin(minRange, maxRange) {
+
+
 
 }
