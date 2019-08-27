@@ -8,24 +8,8 @@ var inputs = document.querySelectorAll('input');
 var errorBoxes = document.querySelectorAll('.error');
 
 var winners = [];
-
-clearButton.addEventListener('click', function() {
-
-  clearForms();
-
-  disableButton();
-
-});
-
-resetButton.addEventListener('click', function() {
-
-  var randomNumber = Math.round(parseInt(document.querySelector('#get-min-range').value, 10) - 0.5 + Math.random() * (parseInt(document.querySelector('#get-max-range').value, 10) - parseInt(document.querySelector('#get-min-range').value, 10) + 1));
-
-  clearForms();
-
-  disableButton();
-
-});
+var guesses = [];
+var minutes = [];
 
 
 
@@ -51,10 +35,11 @@ submitButton.addEventListener('click', function(event){
 
   var challengerTwo = new Challenger(document.querySelector('#name-challenger-2'), document.querySelector('#guess-2'), document.querySelectorAll('.name-two'), document.querySelector('.guess-two'), document.querySelector('#challenger-two-result'));
 
-  // inputs vars
+  // range and random
 
   var minRange = parseInt(document.querySelector('#post-min-range').innerText, 10);
   var maxRange = parseInt(document.querySelector('#post-max-range').innerText, 10);
+  var randomNumber = document.querySelector('#random-number-storage').innerText;
 
   // ***VALIDATION OF CHELLENGER FORM***
 
@@ -69,97 +54,117 @@ submitButton.addEventListener('click', function(event){
   var errorGuess = "<p class='error-text'>Guess is not number</p>";
   var errorGuessVal = "<p class='error-text'>Guess must have only numeric symbols</p>";
   var errorOutRange = "<p class='error-text'>Guess must be within range</p>";
+  var errorNoRange = "<p class='error-text'>Range aren't defined</p>";
+
+  //arrays
+  var guessesPlaces = document.querySelectorAll('.guesses-number');
+  var winnerNamePlaces = document.querySelectorAll('.winner-name');
+  var minutesNumberPlaces = document.querySelectorAll('.minutes-number');
 
   if (challengerOne['name'] != "" && challengerTwo['name'] != "" && challengerOne['guessString']  != "" && challengerTwo['guessString'] != "") {
 
-    if(challengerOne['name'].match(letters) && challengerTwo['name'].match(letters)) {
+    if (!isNaN(minRange)) {
 
-      if (((minRange < challengerOne['guess'] || challengerOne['guess'] == minRange) && (maxRange > challengerOne['guess'] || challengerOne['guess'] == maxRange) && (minRange < challengerTwo['guess'] || challengerTwo['guess'] == minRange) && (maxRange > challengerTwo['guess'] || challengerTwo['guess'] == maxRange))) {
+      if(challengerOne['name'].match(letters) && challengerTwo['name'].match(letters)) {
 
-        //make reset and clear buttons dark grey
-        activateButton();
+        if (((minRange < challengerOne['guess'] || challengerOne['guess'] == minRange) && (maxRange > challengerOne['guess'] || challengerOne['guess'] == maxRange) && (minRange < challengerTwo['guess'] || challengerTwo['guess'] == minRange) && (maxRange > challengerTwo['guess'] || challengerTwo['guess'] == maxRange))) {
 
-        // place input values to spots
-        replaceTextToArray(challengerOne['namePlaces'], challengerOne['name']);
-        replaceTextToArray(challengerTwo['namePlaces'], challengerTwo['name']);
+          //make reset and clear buttons dark grey
+          activateButton();
 
-        replaceOnce(challengerOne['guessPlace'], challengerOne['guess']);
-        replaceOnce(challengerTwo['guessPlace'], challengerTwo['guess']);
+          // place input values to spots
+          replaceTextToArray(challengerOne['namePlaces'], challengerOne['name']);
+          replaceTextToArray(challengerTwo['namePlaces'], challengerTwo['name']);
 
-        // create random number
-        var randomNumber = Math.round(minRange - 0.5 + Math.random() * (maxRange - minRange + 1));
-        var guessesPlaces = document.querySelectorAll('.guesses-number')
+          replaceOnce(challengerOne['guessPlace'], challengerOne['guess']);
+          replaceOnce(challengerTwo['guessPlace'], challengerTwo['guess']);
 
-        // place random number to card
-        replaceTextToArray(guessesPlaces, randomNumber);
+          // place results
 
+          placeResults(challengerOne, challengerTwo, randomNumber);
 
-        // place results
+          // *** GAME ***
 
-        placeResults(challengerOne, challengerTwo, randomNumber);
+          //***WINNERS***
 
-        // *** GAME ***
+          function winnerStuff(name) {
 
-        //***WINNERS***
+            const end = new Date().getTime();
+            var gameTime = parseInt(((end - start) / 6000) * 100)/100;
 
-        var winnerNamePlace = document.querySelector('.winner-name');
-        var minutesNumberPlaces = document.querySelectorAll('.minutes-number');
+            addElementsToArray(winners, name);
+            addElementsToArray(guesses, randomNumber);
+            addElementsToArray(minutes, gameTime);
 
-        function winnerStuff(name, resultPlace) {
-          winnerNamePlace.innerText = name;
+            // Add text to winner card
 
-          addWinners(winners, name);
+            var cards = document.querySelectorAll('.winner-card');
+            replaceArrayToArray(winnerNamePlaces, winners);
+            replaceArrayToArray(guessesPlaces, guesses);
+            replaceArrayToArray(minutesNumberPlaces, minutes);
+            //create winner card
+            
 
-          const end = new Date().getTime();
-          var gameTime = parseInt(((end - start) / 6000) * 100)/100;
-
-          replaceTextToArray(minutesNumberPlaces, gameTime);
-
-          if (minRange > 10) {
-
-            minRange = minRange + 10;
-            maxRange = maxRange + 10;
-
-          } else {
-
-            maxRange = maxRange + 10;
+            changeMaxAndMin(minRange, maxRange);
 
           }
 
-          console.log(minRange, maxRange);
+          if (challengerOne['guess'] == randomNumber) {
 
-        }
+            winnerStuff(challengerOne['name'], randomNumber);
 
-        if (challengerOne['guess'] == randomNumber) {
+          } else if (challengerTwo['guess'] == randomNumber) {
 
-          winnerStuff(challengerOne['name'], challengerOne['resultPlace']);
+              winnerStuff(challengerTwo['name'], randomNumber);
 
+          }
 
-        } else if (challengerTwo['guess'] == randomNumber) {
+          createRandomNumber(minRange, maxRange);
 
-          winnerStuff(challengerTwo['name'], challengerTwo['resultPlace']);
+        } else {
+
+          if ((challengerOne['guess'] < minRange) && (challengerTwo['guess'] < minRange)) {
+
+            showErrors(1, challengerOne['guessPath'], errorOutRange);
+            showErrors(2, challengerTwo['guessPath'], errorOutRange);
+
+          } else if ((maxRange < challengerOne['guess']) && (maxRange < challengerTwo['guess'])) {
+
+            showErrors(1, challengerOne['guessPath'], errorOutRange);
+            showErrors(2, challengerTwo['guessPath'], errorOutRange);
+
+          } else if ((challengerOne['guess'] < minRange) || (maxRange < challengerOne['guess'])) {
+
+            showErrors(1, challengerOne['guessPath'], errorOutRange);
+
+          } else if ((challengerTwo['guess'] < minRange) || (maxRange < challengerTwo['guess'])) {
+
+            showErrors(2, challengerTwo['guessPath'], errorOutRange);
+
+          }
 
         }
 
       } else {
 
-        if ((challengerOne['guess'] < minRange) && (challengerTwo['guess'] < minRange)) {
+        if (!challengerOne['name'].match(letters) && !challengerTwo['name'].match(letters)) {
 
-          showErrors(1, challengerOne['guessPath'], errorOutRange);
-          showErrors(2, challengerTwo['guessPath'], errorOutRange);
+          // errors if both names are not alpha-numeric types
 
-        } else if ((maxRange < challengerOne['guess']) && (maxRange < challengerTwo['guess'])) {
+          showErrors(1, challengerOne['namePath'], errorNameVal);
+          showErrors(2, challengerTwo['namePath'], errorNameVal);
 
-          showErrors(1, challengerOne['guessPath'], errorOutRange);
-          showErrors(2, challengerTwo['guessPath'], errorOutRange);
+        } else if (!challengerOne['name'].match(letters)) {
 
-        } else if ((challengerOne['guess'] < minRange) || (maxRange < challengerOne['guess'])) {
+          // error if challenger 1 name is not alpha-numeric type
 
-          showErrors(1, challengerOne['guessPath'], errorOutRange);
+          showErrors(1, challengerOne['namePath'], errorNameVal);
 
-        } else if ((challengerTwo['guess'] < minRange) || (maxRange < challengerTwo['guess'])) {
+        } else if (!challengerTwo['name'].match(letters)) {
 
-          showErrors(2, challengerTwo['guessPath'], errorOutRange);
+          // errors if challenger 2 name is not alpha-numeric type
+
+          showErrors(2, challengerTwo['namePath'], errorNameVal);
 
         }
 
@@ -167,26 +172,7 @@ submitButton.addEventListener('click', function(event){
 
     } else {
 
-      if (!challengerOne['name'].match(letters) && !challengerTwo['name'].match(letters)) {
-
-        // errors if both names are not alpha-numeric types
-
-        showErrors(1, challengerOne['namePath'], errorNameVal);
-        showErrors(2, challengerTwo['namePath'], errorNameVal);
-
-      } else if (!challengerOne['name'].match(letters)) {
-
-        // error if challenger 1 name is not alpha-numeric type
-
-        showErrors(1, challengerOne['namePath'], errorNameVal);
-
-      } else if (!challengerTwo['name'].match(letters)) {
-
-        // errors if challenger 2 name is not alpha-numeric type
-
-        showErrors(2, challengerTwo['namePath'], errorNameVal);
-
-      }
+      showErrors(1, challengerOne['namePath'], errorNoRange);
 
     }
 
@@ -266,26 +252,23 @@ submitButton.addEventListener('click', function(event){
 
   var challengerInputs = [challengerOne['namePath'], challengerTwo['namePath'], challengerOne['guessPath'], challengerTwo['guessPath']];
 
-  for (var i = 0; i < challengerInputs.length; i++) {
+  removeErrorStyles(challengerInputs);
 
-    challengerInputs[i].addEventListener('click', function() {
+});
 
-      for (var i = 0; i < challengerInputs.length; i++) {
+clearButton.addEventListener('click', function() {
 
-        challengerInputs[i].classList.remove('error-input');
+  clearForms();
+  disableButton();
 
-      }
+});
 
-      this.classList.remove('error-input');
+resetButton.addEventListener('click', function() {
 
-      for (var i = 0; i < errorBoxes.length; i++) {
-
-        errorBoxes[i].style.display = 'none';
-
-      }
-
-    });
-  }
+  var minRange = parseInt(document.querySelector('#post-min-range').innerText, 10);
+  var maxRange = parseInt(document.querySelector('#post-max-range').innerText, 10);
+  createRandomNumber(minRange, maxRange);
+  disableButton();
 
 });
 
@@ -342,11 +325,35 @@ function activateButton() {
 
 };
 
+function addElementsToArray(array, value) {
+
+  if (array.length < 4) {
+
+    array.push(value);
+
+  } else {
+
+    array.shift();
+    array.push(value);
+
+  }
+}
+
 function replaceTextToArray(array, value) {
 
   for (var i = 0; i < array.length; i++) {
 
     array[i].innerText = value;
+
+  };
+
+};
+
+function replaceArrayToArray(arrayPlace, arrayValue) {
+
+  for (var i = 0; i < arrayPlace.length; i++) {
+
+    arrayPlace[i].innerText = arrayValue[i];
 
   };
 
@@ -369,18 +376,30 @@ function showErrors(index, inputPath, error) {
 
 };
 
-function addWinners(array, value) {
+function removeErrorStyles(inputs) {
 
-  if (array.length < 4) {
+  for (var i = 0; i < inputs.length; i++) {
 
-    array.push(value);
+    inputs[i].addEventListener('click', function() {
 
-  } else {
+      for (var i = 0; i < inputs.length; i++) {
 
-    array.shift();
-    array.push(value);
+        inputs[i].classList.remove('error-input');
+
+      }
+
+      this.classList.remove('error-input');
+
+      for (var i = 0; i < errorBoxes.length; i++) {
+
+        errorBoxes[i].style.display = 'none';
+
+      }
+
+    });
 
   }
+
 }
 
 function placeResults(challengerOne, challengerTwo, randomNumber) {
@@ -414,10 +433,35 @@ function placeResults(challengerOne, challengerTwo, randomNumber) {
     replaceOnce(challengerTwo['resultPlace'], "BOOM!");
 
   }
+
 }
 
 function changeMaxAndMin(minRange, maxRange) {
 
+  var minStorage = document.querySelector('#post-min-range');
+  var maxStorage = document.querySelector('#post-max-range');
 
+  if (minRange > 10) {
 
+    minRange = minRange - 10;
+    minStorage.innerText = minRange;
+    maxRange = maxRange + 10;
+    maxStorage.innerText = maxRange;
+
+  } else {
+
+    minStorage.innerText = minRange;
+    maxRange = maxRange + 10;
+    maxStorage.innerText = maxRange;
+
+  }
+
+}
+
+function createRandomNumber(minRange, maxRange) {
+
+  var randomStorage = document.querySelector('#random-number-storage');
+  var randomNumber = Math.round(minRange - 0.5 + Math.random() * (maxRange - minRange + 1));
+
+  randomStorage.innerText = randomNumber;
 }
