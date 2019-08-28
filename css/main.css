@@ -111,7 +111,7 @@ p {
 }
 
 #random-number-storage {
-  display: inline;
+  display: none;
   font-style: italic;
 }
 
