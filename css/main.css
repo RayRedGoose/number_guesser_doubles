@@ -219,6 +219,12 @@ p {
   background-color: #d0d2d3;
 }
 
+.delete-all-button {
+  align-self: flex-end;
+  display: none;
+  margin: 20px;
+}
+
 /* challenger-card styles */
 
 .challenger-card-wrapper {
@@ -264,10 +270,22 @@ p {
 .section-right {
   align-items: center;
   display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.section-right__header {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.cards-section {
+  align-items: center;
+  display: flex;
   flex-direction: column-reverse;
   justify-content: flex-end;
-  width: 50%;
-
+  width: 100%;
 }
 
 .winner-card {

@@ -32,13 +32,22 @@ sectionLeft.addEventListener('click', function(event) {
     event.target.remove();
   }
 });
+
 sectionLeft.addEventListener('input', function(event) {
   if (event.target.classList.contains('input')) {
     document.querySelector('#clear-button').classList.add('button--dark-grey');
     document.querySelector('#clear-button').classList.remove('button--light-grey');
   }
 });
-sectionRight.addEventListener('click', removeWinnerCard);
+
+sectionRight.addEventListener('click', function(event) {
+  if (event.target.classList.contains('footer-delete-icon')) {
+    removeWinnerCard();
+  }
+  if (event.target.classList.contains('delete-all-button')) {
+    deleteAllCards();
+  }
+});
 
 // *** FUNCTIONS ***
 
@@ -111,6 +120,15 @@ function createRandomNumber(minRange, maxRange) {
   randomStorage.innerText = randomNumber;
 };
 
+// Function for deleting all cards
+function deleteAllCards() {
+  var cards = document.querySelectorAll('.winner-card');
+  for (var i = 0; i < cards.length; i++) {
+    cards[i].remove();
+  }
+  document.querySelector('#delete-all-button').style.display = 'none';
+}
+
 // Function for altering the color states of the clear and reset buttons from dark to light grey
 function disableButton() {
   document.querySelector('#clear-button').classList.remove('button--dark-grey');
@@ -121,10 +139,11 @@ function disableButton() {
 
 // Function for dynamically generating winner cards
 function insertCard(nameOne, nameTwo, winnerName, randomNumber, gameTime) {
+  document.querySelector('#delete-all-button').style.display = 'block';
   var insertArticle = document.createElement("article");
   insertArticle.classList.add('winner-card');
   insertArticle.classList.add('slide-from-right');
-  sectionRight.appendChild(insertArticle);
+  document.querySelector('.cards-section').appendChild(insertArticle);
   insertArticle.innerHTML =
   `
     <header class="header-card">
@@ -195,10 +214,8 @@ function removeErrorStyles(input) {
 };
 
 // Function for removing winner card via the footer-delete-icon button
-function removeWinnerCard(event) {
-  if (event.target.className === "footer-delete-icon") {
-    event.target.closest('.winner-card').remove();
-  }
+function removeWinnerCard() {
+  event.target.closest('.winner-card').remove();
 };
 
 // Function for generally displaying messages and values in targeted locations
