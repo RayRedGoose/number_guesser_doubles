@@ -22,12 +22,14 @@ sectionLeft.addEventListener('click', function(event) {
     resetGame();
   }
   if (event.target.classList.contains('clear-button')) {
-    disableButton();
-    clearForms();
+    clearGame();
   }
   if (event.target.classList.contains('error-input')) {
     event.target.classList.add('flip');
     removeErrorStyles(event.target);
+  }
+  if (event.target.classList.contains('cookie') || event.target.classList.contains('bunny')) {
+    event.target.remove();
   }
 });
 sectionLeft.addEventListener('input', function(event) {
@@ -78,6 +80,29 @@ function clearForms() {
   document.querySelector('#update-button').classList.remove('flash-button');
   document.querySelector('#submit-button').classList.remove('flash-button');
 };
+
+// Function for clear button
+function clearGame() {
+  disableButton();
+  clearForms();
+  removeBunny();
+}
+
+// KONAMI CODE!
+function createBunny(winnerName) {
+  if (winnerName == 'Bunny' || winnerName == 'BUNNY' || winnerName == 'bunny') {
+    var secret = document.querySelector(".secret");
+    var insertSecret = document.createElement("article");
+    secret.appendChild(insertSecret);
+    insertSecret.innerHTML = `<img class="bunny" src="images/bunny.png" alt="">`;
+  }
+  if (winnerName == 'Cookie' || winnerName == 'cookie' || winnerName == 'COOKIE') {
+    var secret = document.querySelector(".secret");
+    var insertSecret = document.createElement("article");
+    secret.appendChild(insertSecret);
+    insertSecret.innerHTML = `<img class="cookie" src="images/cookie.png" alt="">`;
+  }
+}
 
 // Function for generating the random winning number from within user-provided range
 function createRandomNumber(minRange, maxRange) {
@@ -140,6 +165,18 @@ function placeResults(challengerOne, challengerTwo, randomNumber) {
   }
 };
 
+// Function for removing konami code
+function removeBunny() {
+  var bunnies = document.querySelectorAll('.bunny');
+  var cookies = document.querySelectorAll('.cookie');
+  for (var i = 0; i < bunnies.length; i++) {
+    bunnies[i].remove();
+  }
+  for (var i = 0; i < cookies.length; i++) {
+    cookies[i].remove();
+  }
+}
+
 // Function for clearing out validation error displays (tied to eventListeners on the left section)
 function removeErrorStyles(input) {
   input.classList.remove('error-input');
@@ -176,6 +213,7 @@ function resetGame() {
   createRandomNumber(minRange, maxRange);
   disableButton();
   clearForms();
+  removeBunny()
 };
 
 // Function for displaying error content per validations
@@ -250,9 +288,11 @@ function startGame(){
     var gameTime = parseInt(((end - start) / 6000) * 100)/100;
     if (challengerOne['guess'] == randomNumber) {
       showWinner(gameTime, challengerOne['name'], challengerTwo['name'], challengerOne['name'], randomNumber, minRange, maxRange);
+      createBunny(challengerOne['name']);
     }
     if (challengerTwo['guess'] == randomNumber) {
       showWinner(gameTime, challengerOne['name'], challengerTwo['name'], challengerTwo['name'], randomNumber, minRange, maxRange);
+      createBunny(challengerTwo['name']);
     }
     createRandomNumber(minRange, maxRange);
   }
