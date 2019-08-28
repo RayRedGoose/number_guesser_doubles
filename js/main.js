@@ -25,7 +25,8 @@ sectionLeft.addEventListener('click', function(event) {
     disableButton();
     clearForms();
   }
-  if (event.target.classList.contains('input')) {
+  if (event.target.classList.contains('error-input')) {
+    event.target.classList.add('flip');
     removeErrorStyles(event.target);
   }
 });
@@ -74,6 +75,8 @@ function clearForms() {
   for (var i = 0; i < errorBoxes.length; i++) {
     errorBoxes[i].style.display = 'none';
   };
+  document.querySelector('#update-button').classList.remove('flash-button');
+  document.querySelector('#submit-button').classList.remove('flash-button');
 };
 
 // Function for generating the random winning number from within user-provided range
@@ -95,6 +98,7 @@ function disableButton() {
 function insertCard(nameOne, nameTwo, winnerName, randomNumber, gameTime) {
   var insertArticle = document.createElement("article");
   insertArticle.classList.add('winner-card');
+  insertArticle.classList.add('slide-from-right');
   sectionRight.appendChild(insertArticle);
   insertArticle.innerHTML =
   `
@@ -141,12 +145,15 @@ function removeErrorStyles(input) {
   input.classList.remove('error-input');
   if (input.classList.contains('range')) {
     errorBoxes[0].style.display = 'none';
+    document.querySelector('#update-button').classList.remove('flash-button');
   }
   if (input.classList.contains('input-first-row')) {
     errorBoxes[1].style.display = 'none';
+    document.querySelector('#submit-button').classList.remove('flash-button');
   }
   if (input.classList.contains('input-second-row')) {
     errorBoxes[2].style.display = 'none';
+    document.querySelector('#submit-button').classList.remove('flash-button');
   }
 };
 
@@ -177,6 +184,13 @@ function showErrors(index, inputPath, error) {
   errorBoxes[index].style.display = 'flex';
   errorBoxes[index].innerHTML = errorContent + error;
   inputPath.classList.add('error-input');
+  inputPath.classList.remove('flip');
+  if (errorBoxes[0].style.display == 'flex') {
+    document.querySelector('#update-button').classList.add('flash-button');
+  }
+  if (errorBoxes[1].style.display == 'flex' || errorBoxes[2].style.display == 'flex') {
+    document.querySelector('#submit-button').classList.add('flash-button');
+  }
 };
 
 // Function for generating winner card with updated range values
