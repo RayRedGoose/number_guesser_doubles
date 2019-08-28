@@ -1,8 +1,8 @@
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
   border: 0;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -17,74 +17,67 @@ p {
 
 .header {
   background-color: #404041;
-  text-align: center;
   padding: 10px 0;
+  text-align: center;
 }
 
 .title-1 {
+  color: #DD1972;
   font-size: 54px;
   line-height: 1;
-  color: #DD1972;
   text-transform: uppercase;
 }
 
 .title-1::after {
-  content: "guesser";
   color: #DD1972;
+  content: "guesser";
   font-weight: 300;
 }
 
 .title-2 {
-  font-size: 18px;
-  line-height: 1;
   color: #FFFFFF;
+  font-size: 18px;
   font-weight: 300;
+  line-height: 1;
   margin: 5px 0;
 }
 
 .title-2::before,
 .title-2::after {
-  content: " ";
-  width: 6%;
-  height: 1px;
-  display: inline-block;
-  vertical-align: middle;
   background-color: #ffffff;
+  content: " ";
+  display: inline-block;
+  height: 1px;
   margin-right: 8px;
+  vertical-align: middle;
+  width: 6%;
 }
 
 /* MAIN STYLES */
 
 .content {
-  width: 100%;
-  margin: auto;
-  display: flex;
   background-color: #d1d2d4;
+  display: flex;
+  margin: auto;
+  width: 100%;
 }
 
 .section-left {
-  width: 50%;
+  align-items: center;
   background-color: #f7f7f7;
   border-right: 2px solid #404041;
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 10px 0px;
+  width: 50%;
 }
 
 .article {
-  width: 95%;
   background-color: #ffffff;
   border: 1px solid #d0d2d3;
-  padding: 15px;
   margin: 10px 0px;
-}
-
-.section-right {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-end;
-  align-items: center;
+  padding: 15px;
+  width: 95%;
 }
 
 /* LEFT SECTION */
@@ -112,15 +105,20 @@ p {
 /* forms styles */
 
 .set-range__form {
+  align-items: flex-end;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+}
+
+#random-number-storage {
+  display: none;
+  font-style: italic;
 }
 
 .challenger-name__form {
+  align-items: flex-end;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
 }
 
 .label {
@@ -128,41 +126,43 @@ p {
 }
 
 .input {
-  font-size: 16px;
-  padding: 7px;
   border: 1px solid #d1d2d4;
+  font-size: 16px;
   margin-top: 5px;
+  padding: 7px;
 }
 
 .input:focus {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05), 0 0 4px rgba(0,0,0,.2);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.05), 0 0 4px rgba(0,0,0,.2);
   outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(0,0,0,.5);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(0,0,0,.5);
+
 }
 
 .input-wrapper--range {
-  width: 35%;
   display: flex;
   flex-direction: column;
+  width: 35%;
 }
 
 .input-wrapper--name {
-  width: 70%;
   display: flex;
   flex-direction: column;
+  width: 70%;
 }
 
 .input-wrapper--guess {
-  width: 28%;
   display: flex;
   flex-direction: column;
+  width: 28%;
 }
 
 /* error styles */
 
 .error {
-  margin-top: 5px;
   display: flex;
+  display: none;
+  margin-top: 5px;
 }
 
 .error-icon {
@@ -170,9 +170,9 @@ p {
 }
 
 .error-text {
-  margin-left: 10px;
-  font-size: 14px;
   color: #f74d9b;
+  font-size: 14px;
+  margin-left: 10px;
   vertical-align: bottom;
 }
 
@@ -183,8 +183,8 @@ p {
 .error-input:focus {
   border-color: #f74d9b;
   outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(247, 77, 155, 0.5);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(247, 77, 155, 0.5);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05), 0 0 4px rgba(247, 77, 155, 0.2);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.05), 0 0 4px rgba(247, 77, 155, 0.2);
 }
 
 /* buttons styles */
@@ -196,14 +196,14 @@ p {
 }
 
 .button {
+  border-radius: 20px;
+  cursor: pointer;
   color: #ffffff;
-  padding: 5px 25px;
   font-size: 16px;
   font-family: 'Open Sans', sans-serif;
   font-weight: 700;
   text-transform: uppercase;
-  border-radius: 20px;
-  cursor: pointer;
+  padding: 5px 25px;
 }
 
 .button--dark-grey {
@@ -219,11 +219,6 @@ p {
   background-color: #d0d2d3;
 }
 
-.button--light-grey:hover,
-.button--light-grey:active {
-  background-color: #6e6e6e;
-}
-
 /* challenger-card styles */
 
 .challenger-card-wrapper {
@@ -233,8 +228,8 @@ p {
 }
 
 .challenger-card {
-  width: 50%;
   text-align: center;
+  width: 50%;
 }
 
 .challenger-card:first-child {
@@ -267,108 +262,109 @@ p {
 /* RIGHT SECTION */
 
 .section-right {
-  width: 50%;
+  align-items: center;
   display: flex;
   flex-direction: column-reverse;
   justify-content: flex-end;
-  align-items: center;
+  width: 50%;
+
 }
 
 .winner-card {
+  align-items: center;
   background-color: #FFFFFF;
   color: #6E6E6E;
-  width: 85%;
-  margin-top: 8px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin-top: 8px;
+  width: 85%;
 }
 
 .header-card {
-  width: 90%;
+  align-items: center;
   display: flex;
   justify-content: space-around;
-  align-items: center;
   padding: 10px 0px;
+  width: 90%;
 }
 
 .header-name {
-  text-transform: uppercase;
   font-size: 14px;
   font-weight: bold;
+  text-transform: uppercase;
 }
 
 .vs {
   font-size: 14px;
-  line-height: 1;
   font-weight: 300;
+  line-height: 1;
 }
 
 .winner-wrapper {
-  border-top: 1px solid #D0d2d3;
   border-bottom: 1px solid #D0d2d3;
+  border-top: 1px solid #D0d2d3;
   padding: 20px 0px;
-  width: 95%;
   text-align: center;
+  width: 95%;
 }
 
 .winner-name {
   color: #6E6E6E;
-  text-transform: uppercase;
   font-weight: bold;
   font-size: 32px;
+  text-transform: uppercase;
 }
 
 .winner-name::after {
   content: "winner";
-  text-transform: uppercase;
   font-weight: 300;
   display: block;
   line-height: 1.0;
+  text-transform: uppercase;
 }
 
 .footer-card {
-  width: 100%;
-  padding: 10px 0px;
+  align-items: center;
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  width: 100%;
+  padding: 10px 0px;
 }
 
 .guesses-number {
+  color: #6E6E6E;
   font-size: 14px;
   font-weight: bold;
-  color: #6E6E6E;
 }
 
 .guesses-number::after {
   content: "guesses";
-  text-transform: uppercase;
   font-weight: 300;
   margin-left: 2px;
+  text-transform: uppercase;
 }
 
 .minutes-number {
+  color: #6E6E6E;
   font-size: 14px;
   font-weight: bold;
   text-transform: uppercase;
-  color: #6E6E6E;
 }
 
 .minutes-number::after {
   content: "minutes";
-  text-transform: uppercase;
   font-weight: 300;
   margin-left: 2px;
+  text-transform: uppercase;
 }
 
 .footer-delete-icon {
+  cursor: pointer;
   height: 16px;
   width: auto;
-  cursor: pointer;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 1080px) {
 
   .content {
     flex-direction: column;
@@ -379,9 +375,13 @@ p {
     width: 100%;
   }
 
+  .button-wrapper {
+    justify-content: space-around;
+  }
+
 }
 
-@media (max-width: 500px) {
+@media (max-width: 550px) {
 
   .title-1 {
     font-size: 24px;
@@ -399,41 +399,41 @@ p {
 
   .set-range__form,
   .challenger-name__form {
-    flex-direction: column;
     align-items: flex-start;
+    flex-direction: column;
   }
 
   .input-wrapper--range,
   .input-wrapper--name,
   .input-wrapper--guess {
-    width: 100%;
     margin-bottom: 10px;
+    width: 100%;
   }
 
   .button-wrapper {
-    margin-top: 10px;
     flex-direction: column;
+    margin-top: 10px;
   }
 
   .button {
-    width: 100%;
     margin-top: 10px;
+    width: 100%;
   }
 
   .challenger-card-wrapper {
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
     margin-top: 0px;
   }
 
   .challenger-card {
-    width: 100%;
     padding: 10px 0;
+    width: 100%;
   }
 
   .challenger-card:first-child {
-    border-right: 0;
     border-bottom: 1px solid #d0d2d3;
+    border-right: 0;
   }
 
   .challenger-card:last-child {
@@ -446,11 +446,11 @@ p {
   }
 
   .header-card {
-    width: 100%;
+    align-items: center;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center;
     padding: 10px 0px;
+    width: 100%;
   }
 
   .vs {

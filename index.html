@@ -16,116 +16,70 @@
       <section class="section-left">
         <article class="article set-range">
           <h3 class="block-title">Set Range</h3>
-          <form class="set-range__form" action="index.html" method="post">
+          <form id="set-range-form" class="set-range__form" action="index.html" method="post">
             <div class="input-wrapper--range">
-              <label class="label" for="min-range">Min Range</label>
-              <input id="min-range" class="input range" type="text" name="" value="">
+              <label class="label" for="get-min-range">Min Range</label>
+              <input id="get-min-range" class="input range" type="number">
             </div>
             <div class="input-wrapper--range">
-              <label class="label" for="max-range">Max Range</label>
-              <input id="max-range" class="input range" type="text" name="" value="">
+              <label class="label" for="get-max-range">Max Range</label>
+              <input id="get-max-range" class="input range" type="number">
             </div>
-            <button class="button button--dark-grey">Update</button>
+            <button id="update-button" class="button update-button button--dark-grey">Update</button>
           </form>
+          <div class="error"></div>
         </article>
         <article class="article challenger-name">
-          <p class="current-range">The Current Range is <span class="range-number">1</span> to <span class="range-number">100</span></p>
+          <p class="current-range">The Current Range is <span id="post-min-range" class="range-number">min</span> to <span id="post-max-range" class="range-number">max</span><span id="random-number-storage"></span></p>
           <h3 class="block-title">Challenger 1</h3>
-          <form class="challenger-name__form" action="index.html" method="post">
+          <form id="challenger-one-name-form" class="challenger-name__form" action="index.html" method="post">
             <div class="input-wrapper--name">
               <label class="label" for="name-challenger-1">Name</label>
-              <input id="name-challenger-1" class="input input-name error-input" type="text" name="" value="">
+              <input id="name-challenger-1" class="input input-name" type="text" name="" value="">
             </div>
             <div class="input-wrapper--guess">
               <label class="label" for="guess-challenger-1">Guess</label>
-              <input id="guess-1" class="input input-guess" type="text" name="" value="">
+              <input id="guess-1" class="input input-guess" type="number">
             </div>
           </form>
-          <div class="error">
-            <img class="error-icon" src="images/error-icon.svg" alt="error-icon">
-            <p class="error-text">Enter a name</p>
-          </div>
+          <div class="error"></div>
           <h3 class="block-title mt-20">Challenger 2</h3>
-          <form class="challenger-name__form" action="index.html" method="post">
+          <form id="challenger-two-name-form" class="challenger-name__form" action="index.html" method="post">
             <div class="input-wrapper--name">
               <label class="label" for="name-challenger-2">Name</label>
               <input id="name-challenger-2" class="input input-name" type="text" name="" value="">
             </div>
             <div class="input-wrapper--guess">
               <label class="label" for="guess-challenger-2">Guess</label>
-              <input id="guess-2" class="input input-guess" type="text" name="" value="">
+              <input id="guess-2" class="input input-guess" type="number">
             </div>
           </form>
+          <div class="error"></div>
           <div class="button-wrapper">
-            <button class="button button--dark-grey">SUBMIT GUESS</button>
-            <button class="button button--light-grey">RESET GAME</button>
-            <button class="button button--light-grey">CLEAR GAME</button>
+            <button id="submit-button" class="button submit-button button--dark-grey">SUBMIT GUESS</button>
+            <button id="reset-button" class="button reset-button button--light-grey">RESET GAME</button>
+            <button id="clear-button" class="button clear-button button--light-grey">CLEAR GAME</button>
           </div>
         </article>
         <article class="article latest-score">
           <h3 class="block-title">Latest Score</h3>
           <div class="challenger-card-wrapper">
             <div class="challenger-card">
-              <h4 class="challenger-name-title">Challenger 1 Name</h4>
+              <h4 class="name-one challenger-name-title">Challenger 1 Name</h4>
               <p class="card-text">current guess</p>
-              <span class="guess-number">97</span>
-              <p class="card-text card-text--bigger">that's too high</p>
+              <p class="guess-one guess-number">--</p>
+              <p id="challenger-one-result" class="card-text card-text--bigger"></p>
             </div>
             <div class="challenger-card">
-              <h4 class="challenger-name-title">Challenger 2 Name</h4>
+              <h4 class="name-two challenger-name-title">Challenger 2 Name</h4>
               <p class="card-text">current guess</p>
-              <span class="guess-number">3</span>
-              <p class="card-text card-text--bigger">that's too low</p>
+              <p class="guess-two guess-number">--</p>
+              <p id="challenger-two-result" class="card-text card-text--bigger"></p>
             </div>
           </div>
         </article>
       </section>
       <section class="section-right">
-        <article class="winner-card">
-          <div class="header-card">
-            <span class="header-name">Challenger 1 name</span>
-            <p class="vs"> vs </p>
-            <span class="header-name">Challenger 2 name</span>
-           </div>
-          <div class="winner-wrapper">
-            <p class="winner-name">Challenger 1 name</p>
-          </div>
-          <div class="footer-card">
-              <p class="guesses-number">47</p>
-              <p class="minutes-number">1.35</p>
-              <img class="footer-delete-icon" src="images/delete-icon.svg" width="350" />
-          </div>
-        </article>
-        <article class="winner-card">
-          <div class="header-card">
-            <span class="header-name">Challenger 1 name</span>
-            <p class="vs"> vs </p>
-            <span class="header-name">Challenger 2 name</span>
-           </div>
-          <div class="winner-wrapper">
-            <p class="winner-name">Challenger 1 name</p>
-          </div>
-          <div class="footer-card">
-              <p class="guesses-number">47</p>
-              <p class="minutes-number">1.35</p>
-              <img class="footer-delete-icon" src="images/delete-icon.svg" width="350" />
-          </div>
-        </article>
-        <article class="winner-card">
-          <div class="header-card">
-            <span class="header-name">Challenger 1 name</span>
-            <p class="vs"> vs </p>
-            <span class="header-name">Challenger 2 name</span>
-           </div>
-          <div class="winner-wrapper">
-            <p class="winner-name">Challenger 2 name</p>
-          </div>
-          <div class="footer-card">
-              <p class="guesses-number">47</p>
-              <p class="minutes-number">1.35</p>
-              <img class="footer-delete-icon" src="images/delete-icon.svg" width="350" />
-          </div>
-        </article>
       </section>
     </main>
     <script type="text/javascript" src="js/main.js"></script>
