@@ -284,7 +284,6 @@ function startGame(){
   var errorName = "<p class='error-text'>Enter name</p>";
   var errorNameVal = "<p class='error-text'>Name must have only alpha-numeric symbols</p>";
   var errorGuess = "<p class='error-text'>Enter guess</p>";
-  var errorGuess = "<p class='error-text'>Guess is not number</p>";
   var errorGuessVal = "<p class='error-text'>Guess must have only numeric symbols</p>";
   var errorOutRange = "<p class='error-text'>Guess must be within range</p>";
   var errorNoRange = "<p class='error-text'>Range aren't defined</p>";
@@ -324,69 +323,69 @@ function startGame(){
     challengerTwo['guessPath'].classList.add('error-input');
   }
   // Errors if all first inputs are empty
-  if (challengerOne['name'] == "" && challengerOne['guessString'] == "") {
+  if (challengerTwo['name'].length > 0 && challengerTwo['guessString'].length > 0 && challengerOne['name'] == "" && challengerOne['guessString'] == "") {
     showErrors(1, challengerOne['namePath'], errorAll);
     challengerOne['guessPath'].classList.add('error-input');
   }
   // Errors if all second inputs are empty
-  if (challengerTwo['name'] == "" && challengerTwo['guessString'] == "") {
+  if (challengerOne['name'].length > 0 && challengerOne['guessString'].length > 0 && challengerTwo['name'] == "" && challengerTwo['guessString'] == "") {
     showErrors(2, challengerTwo['namePath'], errorAll);
     challengerTwo['guessPath'].classList.add('error-input');
   }
   // Errors if name inputs are empty
-  if (challengerOne['name'] == "" && challengerTwo['name']) {
+  if (challengerOne['guessString'].length > 0 && challengerTwo['guessString'].length > 0 && challengerOne['name'] == "" && challengerTwo['name'] == "") {
     showErrors(1, challengerOne['namePath'], errorName);
     showErrors(2, challengerTwo['namePath'], errorName);
   }
   // Errors if guess inputs are empty
-  if (challengerOne['guessString'] == "" && challengerTwo['guessString'] != "") {
+  if (challengerOne['name'].length > 0 && challengerTwo['name'].length > 0 && challengerOne['guessString'] == "" && challengerTwo['guessString'] == "") {
     showErrors(1, challengerOne['guessPath'], errorGuess);
     showErrors(2, challengerTwo['guessPath'], errorGuess);
   }
   // Errors if challenger 1 name input is empty
-  if (challengerOne['name'] == "") {
+  if (challengerTwo['name'].length > 0 && challengerTwo['guessString'].length > 0 && challengerOne['guessString'].length > 0 && challengerOne['name'] == "") {
     showErrors(1, challengerOne['namePath'], errorName);
   }
   // Errors if challenger 2 name input is empty
-  if (challengerTwo['name'] == "") {
+  if (challengerOne['guessString'].length > 0 && challengerOne['name'].length > 0 && challengerTwo['guessString'].length > 0 && challengerTwo['name'] == "") {
     showErrors(2, challengerTwo['namePath'], errorName);
   }
   // Errors if challenger 1 guess input is empty
-  if (challengerTwo['guessString'] == "") {
+  if (challengerOne['name'].length > 0 && challengerTwo['name'].length > 0 && challengerTwo['guessString'].length > 0 && challengerOne['guessString'] == "") {
     showErrors(1, challengerOne['guessPath'], errorGuess);
   }
   // Errors if challenger 2 guess input is empty
-  if (challengerTwo['guess'] == "") {
+  if (challengerOne['name'].length > 0 && challengerOne['guessString'].length > 0 && challengerTwo['name'].length > 0 && challengerTwo['guessString'] == "") {
     showErrors(2, challengerTwo['guessPath'], errorGuess);
   }
   // Error message if range have not be defined
-  if (isNaN(minRange)) {
+  if (challengerOne['name'].length > 0 && challengerTwo['name'].length > 0 && challengerOne['guessString'].length > 0 && challengerTwo['guessString'].length > 0 && isNaN(minRange)) {
     showErrors(1, challengerOne['namePath'], errorNoRange);
   }
   // Errors if both names are not alpha-numeric types
-  if (!challengerOne['name'].match(letters) && !challengerTwo['name'].match(letters)) {
+  if (challengerOne['name'].length > 0 && challengerTwo['name'].length > 0 && !challengerOne['name'].match(letters) && !challengerTwo['name'].match(letters)) {
     showErrors(1, challengerOne['namePath'], errorNameVal);
     showErrors(2, challengerTwo['namePath'], errorNameVal);
   }
   // Error if challenger 1 name is not alpha-numeric type
-  if (!challengerOne['name'].match(letters)) {
+  if (challengerOne['name'].length > 0 && !challengerOne['name'].match(letters)) {
     showErrors(1, challengerOne['namePath'], errorNameVal);
   }
   // Errors if challenger 2 name is not alpha-numeric type
-  if (!challengerTwo['name'].match(letters)) {
+  if (challengerTwo['name'].length > 0 && !challengerTwo['name'].match(letters)) {
     showErrors(2, challengerTwo['namePath'], errorNameVal);
   }
   // Errors if both guess are not numeric types
-  if (!challengerOne['guessString'].match(numbers) && !challengerTwo['guessString'].match(numbers)) {
+  if (challengerOne['guessString'].length > 0 && challengerTwo['guessString'].length > 0 && !challengerOne['guessString'].match(numbers) && !challengerTwo['guessString'].match(numbers)) {
     showErrors(1, challengerOne['guessPath'], errorGuessVal);
     showErrors(2, challengerTwo['guessPath'], errorGuessVal);
   }
   // Error if challenger 1 guess is not numeric type
-  if (!challengerOne['guessString'].match(numbers)) {
+  if (challengerOne['guessString'].length > 0 && !challengerOne['guessString'].match(numbers)) {
     showErrors(1, challengerOne['guessPath'], errorGuessVal);
   }
   // Error if challenger 2 guess is not numeric type
-  if (!challengerTwo['guessString'].match(numbers)) {
+  if (challengerTwo['guessString'].length > 0 && !challengerTwo['guessString'].match(numbers)) {
     showErrors(2, challengerTwo['guessPath'], errorGuessVal);
   }
   // Error if challenger 1 and 2 guesses are less than range min
@@ -434,29 +433,17 @@ function updateRange() {
     createRandomNumber(parseInt(getMinRangeValue, 10), parseInt(getMaxRangeValue, 10));
   }
   // Error messages for no numbers entered
-  if (getMinRangeValue == "" && getMaxRangeValue == "") {
+  if (getMinRangeValue.length === 0 && getMaxRangeValue.length === 0) {
     showErrors(0, selectMinRangeId, errorNumber);
     showErrors(0, selectMaxRangeId, errorNumber);
   }
   // Error message if min number isn't entered
-  if (getMinRangeValue == "") {
+  if (getMinRangeValue.length === 0) {
     showErrors(0, selectMinRangeId, errorNumber);
   }
   // Error message if max number isn't entered
-  if (getMaxRangeValue == "") {
+  if (getMaxRangeValue.length === 0) {
     showErrors(0, selectMaxRangeId, errorNumber);
-  }
-  // Error message if both guess are not numeric types
-  if (!getMinRangeValue.match(numbers) && !getMaxRangeValue.match(numbers)) {
-    showErrors(0, selectMinRangeId, errorVal);
-  }
-  // Error message if challenger 1 guess is not numeric type
-  if (!getMinRangeValue.match(numbers)) {
-    showErrors(0, selectMinRangeId, errorVal);
-  }
-  // Error message if challenger 2 guess is not numeric type
-  if (!getMaxRangeValue.match(numbers)) {
-    showErrors(0, selectMaxRangeId, errorVal);
   }
   // Error messages if min > max
   if (parseInt(getMinRangeValue, 10) > parseInt(getMaxRangeValue, 10)) {
@@ -467,5 +454,17 @@ function updateRange() {
   if (parseInt(getMinRangeValue, 10) == parseInt(getMaxRangeValue, 10)) {
     showErrors(0, selectMinRangeId, errorComparison);
     showErrors(0, selectMaxRangeId, errorComparison);
+  }
+  // Error message if both guess are not numeric types
+  if (getMinRangeValue.length > 0 && getMaxRangeValue.length > 0 && !getMinRangeValue.match(numbers) && !getMaxRangeValue.match(numbers)) {
+    showErrors(0, selectMinRangeId, errorVal);
+  }
+  // Error message if challenger 1 guess is not numeric type
+  if (getMinRangeValue.length > 0 && !getMinRangeValue.match(numbers)) {
+    showErrors(0, selectMinRangeId, errorVal);
+  }
+  // Error message if challenger 2 guess is not numeric type
+  if (getMaxRangeValue.length > 0 && !getMaxRangeValue.match(numbers)) {
+    showErrors(0, selectMaxRangeId, errorVal);
   }
 };
