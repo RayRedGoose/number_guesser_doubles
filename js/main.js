@@ -22,21 +22,32 @@ sectionLeft.addEventListener('click', function(event) {
     resetGame();
   }
   if (event.target.classList.contains('clear-button')) {
-    disableButton();
-    clearForms();
+    clearGame();
   }
   if (event.target.classList.contains('error-input')) {
     event.target.classList.add('flip');
     removeErrorStyles(event.target);
   }
+  if (event.target.classList.contains('cookie') || event.target.classList.contains('bunny')) {
+    event.target.remove();
+  }
 });
+
 sectionLeft.addEventListener('input', function(event) {
   if (event.target.classList.contains('input')) {
     document.querySelector('#clear-button').classList.add('button--dark-grey');
     document.querySelector('#clear-button').classList.remove('button--light-grey');
   }
 });
-sectionRight.addEventListener('click', removeWinnerCard);
+
+sectionRight.addEventListener('click', function(event) {
+  if (event.target.classList.contains('footer-delete-icon')) {
+    removeWinnerCard();
+  }
+  if (event.target.classList.contains('delete-all-button')) {
+    deleteAllCards();
+  }
+});
 
 // *** FUNCTIONS ***
 
@@ -79,12 +90,44 @@ function clearForms() {
   document.querySelector('#submit-button').classList.remove('flash-button');
 };
 
+// Function for clear button
+function clearGame() {
+  disableButton();
+  clearForms();
+  removeBunny();
+}
+
+// KONAMI CODE!
+function createBunny(winnerName) {
+  if (winnerName == 'Bunny' || winnerName == 'BUNNY' || winnerName == 'bunny') {
+    var secret = document.querySelector(".secret");
+    var insertSecret = document.createElement("article");
+    secret.appendChild(insertSecret);
+    insertSecret.innerHTML = `<img class="bunny" src="images/bunny.png" alt="">`;
+  }
+  if (winnerName == 'Cookie' || winnerName == 'cookie' || winnerName == 'COOKIE') {
+    var secret = document.querySelector(".secret");
+    var insertSecret = document.createElement("article");
+    secret.appendChild(insertSecret);
+    insertSecret.innerHTML = `<img class="cookie" src="images/cookie.png" alt="">`;
+  }
+}
+
 // Function for generating the random winning number from within user-provided range
 function createRandomNumber(minRange, maxRange) {
   var randomStorage = document.querySelector('#random-number-storage');
   var randomNumber = Math.round(minRange - 0.5 + Math.random() * (maxRange - minRange + 1));
   randomStorage.innerText = randomNumber;
 };
+
+// Function for deleting all cards
+function deleteAllCards() {
+  var cards = document.querySelectorAll('.winner-card');
+  for (var i = 0; i < cards.length; i++) {
+    cards[i].remove();
+  }
+  document.querySelector('#delete-all-button').style.display = 'none';
+}
 
 // Function for altering the color states of the clear and reset buttons from dark to light grey
 function disableButton() {
@@ -96,10 +139,11 @@ function disableButton() {
 
 // Function for dynamically generating winner cards
 function insertCard(nameOne, nameTwo, winnerName, randomNumber, gameTime) {
+  document.querySelector('#delete-all-button').style.display = 'block';
   var insertArticle = document.createElement("article");
   insertArticle.classList.add('winner-card');
   insertArticle.classList.add('slide-from-right');
-  sectionRight.appendChild(insertArticle);
+  document.querySelector('.cards-section').appendChild(insertArticle);
   insertArticle.innerHTML =
   `
     <header class="header-card">
@@ -140,6 +184,18 @@ function placeResults(challengerOne, challengerTwo, randomNumber) {
   }
 };
 
+// Function for removing konami code
+function removeBunny() {
+  var bunnies = document.querySelectorAll('.bunny');
+  var cookies = document.querySelectorAll('.cookie');
+  for (var i = 0; i < bunnies.length; i++) {
+    bunnies[i].remove();
+  }
+  for (var i = 0; i < cookies.length; i++) {
+    cookies[i].remove();
+  }
+}
+
 // Function for clearing out validation error displays (tied to eventListeners on the left section)
 function removeErrorStyles(input) {
   input.classList.remove('error-input');
@@ -158,10 +214,8 @@ function removeErrorStyles(input) {
 };
 
 // Function for removing winner card via the footer-delete-icon button
-function removeWinnerCard(event) {
-  if (event.target.className === "footer-delete-icon") {
-    event.target.closest('.winner-card').remove();
-  }
+function removeWinnerCard() {
+  event.target.closest('.winner-card').remove();
 };
 
 // Function for generally displaying messages and values in targeted locations
@@ -176,6 +230,7 @@ function resetGame() {
   createRandomNumber(minRange, maxRange);
   disableButton();
   clearForms();
+  removeBunny()
 };
 
 // Function for displaying error content per validations
@@ -250,9 +305,11 @@ function startGame(){
     var gameTime = parseInt(((end - start) / 6000) * 100)/100;
     if (challengerOne['guess'] == randomNumber) {
       showWinner(gameTime, challengerOne['name'], challengerTwo['name'], challengerOne['name'], randomNumber, minRange, maxRange);
+      createBunny(challengerOne['name']);
     }
     if (challengerTwo['guess'] == randomNumber) {
       showWinner(gameTime, challengerOne['name'], challengerTwo['name'], challengerTwo['name'], randomNumber, minRange, maxRange);
+      createBunny(challengerTwo['name']);
     }
     createRandomNumber(minRange, maxRange);
   }
